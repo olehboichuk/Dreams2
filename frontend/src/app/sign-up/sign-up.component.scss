@@ -1,0 +1,141 @@
+$color_1: #322b6b;
+$color_2: #222428;
+$color_3: #fff;
+$color_4: #991006;
+$font_family_1: "Roboto", sans-serif;
+$font_family_2: "Exo 2", sans-serif;
+$background_color_1: #0AD69C;
+$background_color_2: #fbb1b1;
+
+$header_font: "Roboto", serif;
+$header_text_color: #222428;
+$no_active_color: #CACACA;
+$active_border: #222428;
+$active_btn: #222428;
+$form_color: #FFFFFF;
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+.content {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  height: 70%;
+  width: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $form_color;
+}
+
+.group__headline{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.boobs{
+  padding-right: 10px;
+}
+
+form {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+::placeholder {
+  color: $no_active_color;
+  font-family: Roboto, serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.form__input {
+  font-family: $header_font;
+  height: 35px;
+  width: 70%;
+  margin-bottom: 24px;
+
+  input {
+    width: 100%;
+    outline: none;
+    border: none;
+  }
+}
+
+.form__headline {
+  margin-left: 15%;
+  font-family: $header_font;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 56px;
+  letter-spacing: 0.105em;
+  text-transform: uppercase;
+  margin-top: 42px;
+  margin-bottom: 56px;
+  color: $header_text_color;
+}
+
+.form__group {
+  margin-top: 20px;
+  display: flex;
+  align-self: center;
+  width: 80%;
+  height: 40px;
+  margin-bottom: 42px;
+  justify-content: center;
+}
+
+.form__button {
+  align-self: center;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 35px;
+  letter-spacing: 0.295em;
+  width: 80%;
+  height: 40px;
+  background-color: $active_btn;
+  font-family: $header_font;
+  color: $form_color;
+  border: none;
+  cursor: pointer;
+
+  &:disabled {
+    background: #dddddd;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .content {
+    width: 70%;
+  }
+}
+
+@media (max-width: 620px) {
+  .content {
+    margin-top: 10px;
+    width: 80%;
+  }
+  .form__button {
+    align-self: center;
+  }
+}
+
+@media (max-width: 460px) {
+  .content {
+    margin-top: 10px;
+    width: 95%;
+  }
+  .form__button {
+    align-self: center;
+  }
+}
