@@ -20,7 +20,6 @@ jwt = JWTManager(app)
 
 CORS(app)
 
-
 # class InvalidUsage(Exception):
 #     status_code = 400
 #
@@ -43,6 +42,7 @@ CORS(app)
 #     response.status_code = error.status_code
 #     return response
 
+
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, ObjectId):
@@ -56,6 +56,7 @@ def register():
     first_name = request.get_json()['first_name']
     last_name = request.get_json()['last_name']
     email = request.get_json()['email']
+    phone_number = request.get_json()['phone_number']
     password = bcrypt.generate_password_hash(request.get_json()['password']).decode('utf-8')
     created = datetime.utcnow()
 
@@ -78,9 +79,8 @@ def register():
             'first_name': new_user['first_name'],
             '_id': json_id
         })
-    result = {'email': new_user['email'] + ' registered'}
+
     return access_token, 200
-    # return jsonify({'token': access_token}), 200
 
 
 @app.route('/users/login', methods=['POST'])
@@ -88,21 +88,21 @@ def login():
     users = mongo.db.users
     email = request.get_json()['email']
     password = request.get_json()['password']
-    result = ""
 
     response = users.find_one({'email': email})
 
     if response:
         if bcrypt.check_password_hash(response['password'], password):
+            json_id = JSONEncoder().encode(response['_id'])
             access_token = create_access_token(identity={
                 'first_name': response['first_name'],
-                '_id': response['_id']}
+                '_id': json_id}
             )
-            result = jsonify({"token": access_token})
+            result = access_token, 200
         else:
-            result = jsonify({"error": "Invalid username and password"})
+            result = jsonify({"error": "Invalid username and password"}), 422
     else:
-        result = jsonify({"result": "No results found"})
+        result = jsonify({"result": "No results found"}), 422
     return result
 
 
