@@ -21,6 +21,35 @@ jwt = JWTManager(app)
 CORS(app)
 
 
+# class InvalidUsage(Exception):
+#     status_code = 400
+#
+#     def __init__(self, message, status_code=None, payload=None):
+#         Exception.__init__(self)
+#         self.message = message
+#         if status_code is not None:
+#             self.status_code = status_code
+#         self.payload = payload
+#
+#     def to_dict(self):
+#         rv = dict(self.payload or ())
+#         rv['message'] = self.message
+#         return rv
+#
+#
+# @app.errorhandler(InvalidUsage)
+# def handle_invalid_usage(error):
+#     response = jsonify(error.to_dict())
+#     response.status_code = error.status_code
+#     return response
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
+
+
 @app.route('/users/register', methods=['POST'])
 def register():
     users = mongo.db.users
@@ -30,6 +59,10 @@ def register():
     password = bcrypt.generate_password_hash(request.get_json()['password']).decode('utf-8')
     created = datetime.utcnow()
 
+    response = users.find_one({'email': email})
+    if response:
+        return "", 403
+
     user_id = users.insert({
         'first_name': first_name,
         'last_name': last_name,
@@ -38,10 +71,16 @@ def register():
         'created': created,
     })
     new_user = users.find_one({'_id': user_id})
-
+    access_token = None
+    if new_user:
+        json_id = JSONEncoder().encode(user_id)
+        access_token = create_access_token(identity={
+            'first_name': new_user['first_name'],
+            '_id': json_id
+        })
     result = {'email': new_user['email'] + ' registered'}
-
-    return jsonify({'result': result})
+    return access_token, 200
+    # return jsonify({'token': access_token}), 200
 
 
 @app.route('/users/login', methods=['POST'])
@@ -57,8 +96,7 @@ def login():
         if bcrypt.check_password_hash(response['password'], password):
             access_token = create_access_token(identity={
                 'first_name': response['first_name'],
-                'last_name': response['last_name'],
-                'email': response['email']}
+                '_id': response['_id']}
             )
             result = jsonify({"token": access_token})
         else:
