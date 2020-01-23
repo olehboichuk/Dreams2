@@ -98,7 +98,7 @@ def login():
                 'first_name': response['first_name'],
                 '_id': json_id}
             )
-            result = access_token, 200
+            result = jsonify({"token": access_token}), 200
         else:
             result = jsonify({"error": "Invalid username and password"}), 422
     else:

@@ -10,13 +10,15 @@ import { AppRoutingModule } from './app-routing.module';
 import {MatFormFieldModule, MatInputModule} from "@angular/material";
 import {Ng5SliderModule} from "ng5-slider";
 import { HttpClientModule } from '@angular/common/http';
+import { MainPageComponent } from './main-page/main-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
     LoginComponent,
-    DreamFormComponent
+    DreamFormComponent,
+    MainPageComponent
   ],
   imports: [
     ReactiveFormsModule,
