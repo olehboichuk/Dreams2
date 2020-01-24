@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, json
+from flask import Flask, jsonify, request, json, redirect
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from datetime import datetime
@@ -19,6 +19,11 @@ bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
 
 CORS(app)
+REFS = {'REGISTER': '/users/register',
+        'LOGIN': '/users/login',
+        'DREAM': '/users/dream-register',
+        'PAYMENT': '/users/payment',
+        'LIKE': '/users/like'}
 
 # class InvalidUsage(Exception):
 #     status_code = 400
@@ -50,7 +55,7 @@ class JSONEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, o)
 
 
-@app.route('/users/register', methods=['POST'])
+@app.route(REFS['REGISTER'], methods=['POST'])
 def register():
     users = mongo.db.users
     first_name = request.get_json()['first_name']
@@ -58,7 +63,8 @@ def register():
     email = request.get_json()['email']
     phone_number = request.get_json()['phone_number']
     password = bcrypt.generate_password_hash(request.get_json()['password']).decode('utf-8')
-    created = datetime.utcnow()
+    wish_created = 'false'
+    # created = datetime.utcnow()
 
     response = users.find_one({'email': email})
     if response:
@@ -68,8 +74,9 @@ def register():
         'first_name': first_name,
         'last_name': last_name,
         'email': email,
+        'phone_number': phone_number,
         'password': password,
-        'created': created,
+        'wish_created': wish_created
     })
     new_user = users.find_one({'_id': user_id})
     access_token = None
@@ -83,7 +90,7 @@ def register():
     return access_token, 200
 
 
-@app.route('/users/login', methods=['POST'])
+@app.route(REFS['LOGIN'], methods=['POST'])
 def login():
     users = mongo.db.users
     email = request.get_json()['email']
@@ -99,11 +106,18 @@ def login():
                 '_id': json_id}
             )
             result = access_token, 200
+            # result = redirect(REFS['DREAM'])
         else:
-            result = jsonify({"error": "Invalid username and password"}), 422
+            result = jsonify({"error": "Invalid username or password"}), 422
     else:
         result = jsonify({"result": "No results found"}), 422
     return result
+
+
+@app.route(REFS['DREAM'], methods=['POST'])
+def wish():
+
+    return
 
 
 if __name__ == '__main__':
