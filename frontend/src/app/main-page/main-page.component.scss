@@ -1,0 +1,174 @@
+$header_font: "Roboto", serif;
+$header_text_color: #152812;
+$no_active_color: #CACACA;
+$a_text_color: #131ee2;
+$active_border: #222428;
+$hover_text: #0f89ff;
+$active_btn: #222428;
+$form_color: #FFFFFF;
+
+.content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: $form_color;
+}
+
+.info__headline{
+  font-family: $header_font;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 56px;
+  letter-spacing: 0.105em;
+  text-transform: uppercase;
+  color: $header_text_color;
+}
+
+.dreams{
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+}
+
+.dream{
+  padding: 10px;
+  width: 50%;
+  box-sizing: border-box;
+  //box-shadow: -2px 9px 30px rgba(23, 31, 76, 0.02);
+  &:hover{
+    box-shadow: 10px 20px 16px 0px #d6d6d6;
+  }
+}
+
+.dream__name{
+  font-size: 18px;
+  letter-spacing: 0.105em;
+  font-family: $header_font;
+  font-style: normal;
+  text-transform: uppercase;
+  color: $header_text_color;
+}
+
+.dream__price{
+  font-size: 18px;
+  letter-spacing: 0.105em;
+  font-family: $header_font;
+  font-style: normal;
+  text-transform: uppercase;
+  color: $header_text_color;
+}
+
+.dream__description{
+  font-size: 15px;
+  letter-spacing: 0.105em;
+  font-family: $header_font;
+  font-style: normal;
+  color: #8a8a8a;
+}
+
+.dream__author{
+  text-decoration: none;
+}
+
+.separator{
+  margin-bottom: 8px;
+  font-size: 15px;
+  border-bottom: 2px solid #8a8a8a;
+}
+
+.dream__header{
+  align-items: center;
+  display: flex;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.dream__author {
+  font-family: $header_font;
+  color: $a_text_color;
+  cursor: pointer;
+
+  &:hover {
+    color: $hover_text;
+  }
+}
+
+
+
+.button-like {
+  cursor: pointer;
+  outline: none;
+  border: 2px solid #8a8a8a;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 2px;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #8a8a8a;
+  transition: all ease 0.4s;
+}
+
+.button-like span {
+  margin-left: 0.5rem;
+}
+
+.button-like .fa,
+.button-like span {
+  transition: all ease 0.4s;
+}
+
+.button-like:focus {
+  background-color: transparent;
+}
+
+.button-like:focus .fa,
+.button-like:focus span {
+  color: #8a8a8a;
+}
+
+.button-like:hover {
+  border-color: #cc4b37;
+  background-color: transparent;
+}
+
+.button-like:hover .fa,
+.button-like:hover span {
+  color: #cc4b37;
+}
+
+.liked {
+  background-color: #cc4b37;
+  border-color: #cc4b37;
+}
+
+.liked .fa,
+.liked span {
+  color: #fefefe;
+}
+
+.liked:focus {
+  background-color: #cc4b37;
+}
+
+.liked:focus .fa,
+.liked:focus span {
+  color: #fefefe;
+}
+
+.liked:hover {
+  background-color: #cc4b37;
+  border-color: #cc4b37;
+}
+
+.liked:hover .fa,
+.liked:hover span {
+  color: #fefefe;
+}
+
+
+
