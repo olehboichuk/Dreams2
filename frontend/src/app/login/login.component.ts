@@ -4,6 +4,7 @@ import {ErrorStateMatcher} from "@angular/material";
 import {Authentificationrequest} from "../models/authentificationrequest";
 import {Router} from "@angular/router";
 import {MessageService} from "../services/message.service";
+import * as moment from "moment";
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -50,7 +51,8 @@ export class LoginComponent implements OnInit {
     this.loginForm.controls['password'].disable();
     this.loginService.login(user)
       .subscribe(data => {
-              this.router.navigate(['/dream-register']);
+          localStorage.setItem('id_token', data.access_token);
+          this.router.navigate(['/dream-register']);
         },
         error => {
         console.warn('david vse pravilno sdelal(net)');
