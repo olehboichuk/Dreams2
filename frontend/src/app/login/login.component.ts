@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(user)
       .subscribe(data => {
           localStorage.setItem('id_token', data.access_token);
-          this.router.navigate(['/dream-register']);
+          this.router.navigate(['/home']);
         },
         error => {
         console.warn('david vse pravilno sdelal(net)');
