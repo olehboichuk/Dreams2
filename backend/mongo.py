@@ -139,14 +139,40 @@ def dream_register():
         'price': price,
         'number_of_likes': number_of_likes,
         'is_active': is_active,
-        'author': user_id
+        'author': user_id,
+        'create_time': datetime.utcnow()
     })
 
     new_dream = dreams.find_one({'_id': dream_id})
     if new_dream:
-        return jsonify(message="Dream added sucessfully"), 201
-
+        return jsonify(message="Dream added successfully"), 201
     return jsonify(message="Some problems with adding new Dream"), 409
+
+
+@app.route(REFS['HOME'], methods=['POST'])
+def get_all_dreams():
+    sort_type = request.get_json()['sort_type']
+    all_dreams = mongo.db.dreams
+    dreams = all_dreams.find({'is_active': 'true'})
+    dreams_array = []
+    if sort_type == 'likes':
+        for dream in dreams.sort("numbers_of_likes"):
+            # print(dream)
+            dream['_id'] = JSONEncoder().encode(dream['_id'])
+            # print(dream)
+            dreams_array.append(dream)
+        result = jsonify(dreams_array), 200
+    elif sort_type == 'create_time':
+        for dream in dreams.sort("create_time"):
+            dream['_id'] = JSONEncoder().encode(dream['_id'])
+            dreams_array.append(dream)
+        result = jsonify(dreams_array), 200
+    else:
+        for dream in dreams:
+            dream['_id'] = JSONEncoder().encode(dream['_id'])
+            dreams_array.append(dream)
+        result = jsonify(dreams_array), 200
+    return result
 
 
 if __name__ == '__main__':
