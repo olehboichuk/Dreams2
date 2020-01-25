@@ -1,3 +1,4 @@
 export class Token {
-  public access_token: string;
+  public token: string;
+  public expiresIn: string;
 }

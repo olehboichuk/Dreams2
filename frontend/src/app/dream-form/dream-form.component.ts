@@ -62,7 +62,7 @@ export class DreamFormComponent implements OnInit {
     this.registerService.dreamRegister(dream)
       .subscribe(data => {
           console.log('success');
-          this.router.navigate(['/home']);
+          this.router.navigate(['/']);
         },
         error => {
           console.warn('Dreamregister DOESN`T WORK');

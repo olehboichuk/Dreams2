@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {FormBuilder} from "@angular/forms";
+import {MessageService} from "../services/message.service";
+import {Router} from "@angular/router";
+import {Dreams} from "../models/dreams";
 
 @Component({
   selector: 'app-main-page',
@@ -6,12 +10,23 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent implements OnInit {
-  liked = false;
+  private liked = false;
+  public loading = false;
+  private dreams: Dreams [] = [];
 
-  constructor() {
+  constructor(private formBuilder: FormBuilder, private registerService: MessageService, private router: Router) {
   }
 
   ngOnInit() {
+    const sortType = {
+      sort_type: 'likes',
+    };
+    // this.registerService.getAllDreams(sortType).subscribe(data => {
+    //   console.log('ok');
+    //   }, error => {
+    //   console.warn('no ok');
+    //   }
+    // );
   }
 
   like() {

@@ -51,11 +51,13 @@ export class LoginComponent implements OnInit {
     this.loginForm.controls['password'].disable();
     this.loginService.login(user)
       .subscribe(data => {
-          localStorage.setItem('id_token', data.access_token);
-          this.router.navigate(['/home']);
+          const expiresAt = moment().add(data.expiresIn, 'second');
+          localStorage.setItem('id_token', data.token);
+          localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+          this.router.navigate(['/']);
         },
         error => {
-        console.warn('david vse pravilno sdelal(net)');
+          console.warn('LOGIN DOESN`T WORK');
           this.loading = false;
           this.loginForm.controls['email'].enable();
           this.loginForm.controls['password'].enable();
