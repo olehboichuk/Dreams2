@@ -84,9 +84,8 @@ def register():
         json_id = JSONEncoder().encode(user_id)
         token_created = datetime.utcnow()
         access_token = create_access_token(identity={
-            'first_name': new_user['first_name'],
             '_id': json_id,
-            'token_created':token_created
+            'token_created': token_created
         })
 
         return jsonify({
@@ -94,7 +93,6 @@ def register():
             'expiresIn' : token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES']
         }), 201
     return jsonify(message="Some problems with adding new User"), 409
-
 
 
 @app.route(REFS['LOGIN'], methods=['POST'])
@@ -110,11 +108,10 @@ def login():
             json_id = JSONEncoder().encode(response['_id'])
             token_created = datetime.utcnow()
             access_token = create_access_token(identity={
-                'first_name': response['first_name'],
                 '_id': json_id,
                 'token_created': token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES']
             })
-            result = access_token, 200
+            result = jsonify({'token': access_token}), 200
             # result = redirect(REFS['DREAM'])
         else:
             result = jsonify({"error": "Invalid username or password"}), 422
@@ -124,6 +121,7 @@ def login():
 
 
 @app.route(REFS['DREAM'], methods=['POST'])
+@jwt_required
 def dream_register():
     dreams = mongo.db.dreams
 
@@ -133,13 +131,15 @@ def dream_register():
     number_of_likes = 0
     is_active = 'false'
 
+    user_id = get_jwt_identity()['_id']
 
     dream_id = dreams.insert({
         'title': title,
         'description': description,
         'price': price,
         'number_of_likes': number_of_likes,
-        'is_active': is_active
+        'is_active': is_active,
+        'author': user_id
     })
 
     new_dream = dreams.find_one({'_id': dream_id})
