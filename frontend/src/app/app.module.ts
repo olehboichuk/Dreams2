@@ -15,6 +15,9 @@ import {AuthInterceptor} from "./services/AuthInterceptor";
 import { ToolBarComponent } from './tool-bar/tool-bar.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
+import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
+import {NgxMatIntlTelInputModule} from "ngx-mat-intl-tel-input";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import {MatButtonModule} from "@angular/material/button";
     Ng5SliderModule,
     HttpClientModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    NgxIntlTelInputModule,
+    NgxMatIntlTelInputModule,
+    MatIconModule
   ],
   providers: [
     {

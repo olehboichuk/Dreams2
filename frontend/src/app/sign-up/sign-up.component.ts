@@ -6,6 +6,7 @@ import {Registration} from "../models/registration";
 import {MessageService} from "../services/message.service";
 import {Router} from "@angular/router";
 import * as moment from "moment";
+import {SearchCountryField, TooltipLabel, CountryISO} from 'ngx-intl-tel-input';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -24,11 +25,13 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 export class SignUpComponent implements OnInit {
   @ViewChild('passwordComponentWithConfirmation', {static: true})
-
   registerForm: FormGroup;
   public loading = false;
   public password: string;
   matcher = new MyErrorStateMatcher();
+  public hidePassword = true;
+  public hideConfirm = true;
+
 
   constructor(private formBuilder: FormBuilder, private registerService: MessageService, private router: Router) {
   }
@@ -68,7 +71,7 @@ export class SignUpComponent implements OnInit {
     this.registerForm.controls['confirmPassword'].disable();
     this.registerService.register(user)
       .subscribe(data => {
-        const expiresAt = moment.utc().add(data.expiresIn, 'second');
+          const expiresAt = moment.utc().add(data.expiresIn, 'second');
           localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
           localStorage.setItem('id_token', data.token);
           console.log('success');

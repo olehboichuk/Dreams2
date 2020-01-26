@@ -1,19 +1,12 @@
-$color_1: #322b6b;
-$color_2: #222428;
-$color_3: #fff;
-$color_4: #991006;
-$font_family_1: "Roboto", sans-serif;
-$font_family_2: "Exo 2", sans-serif;
-$background_color_1: #0AD69C;
-$background_color_2: #fbb1b1;
-
 $header_font: "Roboto", serif;
 $header_text_color: #222428;
 $no_active_color: #CACACA;
 $active_border: #222428;
 $active_btn: #222428;
 $form_color: #FFFFFF;
-
+body {
+  overflow: hidden;
+}
 main {
   display: flex;
   justify-content: center;
@@ -22,7 +15,7 @@ main {
 }
 
 .content {
-  margin-top: 60px;
+  margin-top: 20px;
   margin-bottom: 60px;
   height: 70%;
   width: 35%;
@@ -36,9 +29,6 @@ main {
   display: flex;
   width: 100%;
   justify-content: space-between;
-}
-.boobs{
-  padding-right: 10px;
 }
 
 form {
@@ -61,7 +51,7 @@ form {
   font-family: $header_font;
   height: 35px;
   width: 70%;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 
   input {
     width: 100%;

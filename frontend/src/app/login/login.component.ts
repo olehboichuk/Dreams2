@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   public loading = false;
   matcher = new MyErrorStateMatcher();
+  hidePassword= true;
 
   constructor(private loginService: MessageService, private router: Router, private formBuilder: FormBuilder) {
   }

@@ -18,7 +18,7 @@ export class DreamFormComponent implements OnInit {
 
   options: Options = {
     floor: 0,
-    step: 100,
+    step: 1,
     ceil: 20000,
     getPointerColor: (value: number): string => {
       return '#000000';
@@ -26,9 +26,9 @@ export class DreamFormComponent implements OnInit {
     translate: (value: number, label: LabelType): string => {
       switch (label) {
         case LabelType.Low:
-          return "кіко?: $" + value;
+          return "кіко?: ₴" + value;
         default:
-          return '$' + value;
+          return '₴' + value;
       }
     }
   };
