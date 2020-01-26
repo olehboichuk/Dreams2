@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, json, redirect
 from flask_pymongo import PyMongo
+import pymongo
 from bson.objectid import ObjectId
 from datetime import datetime, timedelta
 from flask_cors import CORS
@@ -89,8 +90,8 @@ def register():
         })
 
         return jsonify({
-            'token' : access_token,
-            'expiresIn' : token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES']
+            'token': access_token,
+            'expiresIn': token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES']
         }), 201
     return jsonify(message="Some problems with adding new User"), 409
 
@@ -128,7 +129,7 @@ def dream_register():
     title = request.get_json()['title']
     description = request.get_json()['description']
     price = request.get_json()['price']
-    number_of_likes = 0
+    number_of_likes = 5
     is_active = 'true'
 
     user_id = get_jwt_identity()['_id']
@@ -152,36 +153,29 @@ def dream_register():
 @app.route(REFS['HOME'], methods=['POST'])
 def get_all_dreams():
     sort_type = request.get_json()['sort_type']
-    print(sort_type)
-    print('create_time')
-    print(sort_type == 'create_time')
-    all_dreams = mongo.db.dreams
-    dreams = all_dreams.find({'is_active': 'true'})
+    # page_size = request.get_json()['page_size']
+    list_size = request.get_json()['list_size']
+    dreams_db = mongo.db.dreams
+    sorted_dreams = []
 
-    dreams_array = []
     if sort_type == 'likes':
         print("likes")
-        for dream in dreams.sort("numbers_of_likes"):
-            # print(dream)
-            dream['_id'] = JSONEncoder().encode(dream['_id'])
-            # print(dream)
-            dreams_array.append(dream)
-            dreams_array.reverse()
-        result = jsonify(dreams_array), 200
+        sorted_dreams = dreams_db.find({'is_active': 'true'}).sort('number_of_likes', direction=pymongo.DESCENDING)
+        sorted_dreams.limit(list_size)
     elif sort_type == 'create_time':
         print("datetime")
-        for dream in dreams.sort("create_time"):
-            dream['_id'] = JSONEncoder().encode(dream['_id'])
-            dreams_array.append(dream)
-        dreams_array.reverse()
-        result = jsonify(dreams_array), 200
+        sorted_dreams = dreams_db.find({'is_active': 'true'}).sort('create_time', direction=pymongo.DESCENDING)
+        sorted_dreams.limit(list_size)
     else:
         print("else")
-        for dream in dreams:
-            dream['_id'] = JSONEncoder().encode(dream['_id'])
-            dreams_array.append(dream)
-        result = jsonify(dreams_array), 200
+        return jsonify(message="Wrong sorting code"), 422
 
+    dreams_array = []
+    for dream in sorted_dreams:
+        dream['_id'] = JSONEncoder().encode(dream['_id'])
+        dreams_array.append(dream)
+    # dreams_array.reverse()
+    result = jsonify(dreams_array), 200
     return result
 
 
