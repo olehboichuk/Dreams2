@@ -4,6 +4,7 @@ import {ErrorStateMatcher} from "@angular/material";
 import {Authentificationrequest} from "../models/authentificationrequest";
 import {Router} from "@angular/router";
 import {MessageService} from "../services/message.service";
+import * as moment from "moment";
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   public loading = false;
   matcher = new MyErrorStateMatcher();
+  hidePassword= true;
 
   constructor(private loginService: MessageService, private router: Router, private formBuilder: FormBuilder) {
   }
@@ -50,10 +52,13 @@ export class LoginComponent implements OnInit {
     this.loginForm.controls['password'].disable();
     this.loginService.login(user)
       .subscribe(data => {
-              this.router.navigate(['/dream-register']);
+          const expiresAt = moment().add(data.expiresIn, 'second');
+          localStorage.setItem('id_token', data.token);
+          localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+          this.router.navigate(['/']);
         },
         error => {
-        console.warn('david vse pravilno sdelal(net)');
+          console.warn('LOGIN DOESN`T WORK');
           this.loading = false;
           this.loginForm.controls['email'].enable();
           this.loginForm.controls['password'].enable();

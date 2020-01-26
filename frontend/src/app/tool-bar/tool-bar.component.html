@@ -1,0 +1,6 @@
+<mat-toolbar class="bar">
+  <span class="filler"></span>
+  <button *ngIf="!_authService.isLoggedIn()" mat-button style="outline: none;" routerLink="/login">Вхід</button>
+  <button *ngIf="!_authService.isLoggedIn()" mat-button style="outline: none;" routerLink="/register" >Реєстрація</button>
+  <button *ngIf="_authService.isLoggedIn()" (click)="_authService.logout()" mat-button routerLink="/">Вийти</button>
+</mat-toolbar>

@@ -9,8 +9,15 @@ import { DreamFormComponent } from './dream-form/dream-form.component';
 import { AppRoutingModule } from './app-routing.module';
 import {MatFormFieldModule, MatInputModule} from "@angular/material";
 import {Ng5SliderModule} from "ng5-slider";
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { MainPageComponent } from './main-page/main-page.component';
+import {AuthInterceptor} from "./services/AuthInterceptor";
+import { ToolBarComponent } from './tool-bar/tool-bar.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatButtonModule} from "@angular/material/button";
+import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
+import {NgxMatIntlTelInputModule} from "ngx-mat-intl-tel-input";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -18,7 +25,8 @@ import { MainPageComponent } from './main-page/main-page.component';
     SignUpComponent,
     LoginComponent,
     DreamFormComponent,
-    MainPageComponent
+    MainPageComponent,
+    ToolBarComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -27,9 +35,20 @@ import { MainPageComponent } from './main-page/main-page.component';
     MatFormFieldModule,
     MatInputModule,
     Ng5SliderModule,
-    HttpClientModule
+    HttpClientModule,
+    MatToolbarModule,
+    MatButtonModule,
+    NgxIntlTelInputModule,
+    NgxMatIntlTelInputModule,
+    MatIconModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,18 +3,16 @@
     <p class="info__headline">Мрії йопта</p>
   </div>
   <div class="dreams">
-    <div class="dream">
+    <div class="dream" *ngFor="let dream of dreams">
       <div class="dream__header">
-        <p class="dream__name">Поїхати в Іспаніш</p>
-        <p class="dream__price">$4000</p>
+        <p class="dream__name">{{dream.title}}</p>
+        <p class="dream__price">${{dream.price}}</p>
       </div>
       <div class="separator"></div>
-      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на
-        канал</p>
+      <p class="dream__description">{{dream.description}}</p>
       <div class="separator"></div>
       <div class="dream__header">
       <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>
-
 
       <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
         <i class="fa fa-heart">❤</i>
@@ -22,6 +20,8 @@
       </button>
       </div>
     </div>
+
+
     <div class="dream">
       <div class="dream__header">
         <p class="dream__name">Поїхати в Іспаніш</p>

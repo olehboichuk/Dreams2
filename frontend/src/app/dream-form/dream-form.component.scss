@@ -23,13 +23,10 @@ main {
   background: $form_color;
 }
 
-.group__headline{
+.group__headline {
   display: flex;
   width: 100%;
   justify-content: space-between;
-}
-.boobs{
-  padding-right: 10px;
 }
 
 form {
@@ -104,6 +101,20 @@ form {
   }
 }
 
+.ng5-slider .ng5-slider-pointer:after{
+  outline: none!important;
+}
+
+input.price::-webkit-outer-spin-button,
+input.price::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.price {
+  width: 100%;
+  -moz-appearance: textfield;
+}
+
 
 @media (max-width: 900px) {
   .content {
@@ -131,13 +142,15 @@ form {
   }
 }
 
-.area{
+.area {
   margin-bottom: 30px;
 }
-.cont{
+
+.cont {
   margin-top: 20px;
   width: 70%;
 }
+
 .form__textarea {
   resize: none;
 
@@ -153,3 +166,4 @@ form {
     border-radius: 2px;
   }
 }
+

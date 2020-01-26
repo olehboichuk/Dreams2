@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 body{
-  //background: url(/assets/images/background.svg) no-repeat;
+  overflow: hidden;
 }
 
 html, body { height: 100%; }
@@ -47,17 +47,6 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-}
-body::-webkit-scrollbar {
-  width: 12px;
-  background: #fdfeff;
-  mix-blend-mode: normal;
-  border-radius: 8px;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: #d7dce9;
-  border-radius: 6px;
 }
 
 html, body { height: 100%; }
