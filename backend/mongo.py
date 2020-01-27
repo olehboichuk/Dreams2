@@ -27,6 +27,7 @@ REFS = {'REGISTER': '/users/register',
         'PAYMENT': '/users/payment',
         'HOME': '/users/home'}
 
+
 # class InvalidUsage(Exception):
 #     status_code = 400
 #
@@ -143,7 +144,7 @@ def dream_register():
 
     user_id = get_jwt_identity()['_id']
     current_user = users.find_one({'_id': ObjectId(tostring(user_id))})
-    user_name = current_user['first_name'] + current_user['last_name']
+    user_name = current_user['first_name'] + ' ' + current_user['last_name']
 
     dream_id = dreams.insert({
         'title': title,
@@ -204,7 +205,7 @@ def dream_like():
         dreams.update({'_id': dream_id}, {'$inc': {'likes': 1}})
     elif action == 'unlike':
         dreams.update({'_id': dream_id}, {'$dec': {'likes': 1}})
-    return jsonify("jopa"),200
+    return jsonify(message="jopa"), 200
     # менять юзеру статус лайка и активность поста 
 
 

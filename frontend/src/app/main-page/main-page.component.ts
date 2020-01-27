@@ -24,7 +24,7 @@ export class MainPageComponent implements OnInit {
       list_size: this.listSize,
     };
     this.registerService.getAllDreams(sortType).subscribe(data => {
-        console.log('ok');
+        // data['userDTO'].
       }, error => {
         console.warn('no ok');
       }
