@@ -27,6 +27,7 @@ REFS = {'REGISTER': '/users/register',
         'PAYMENT': '/users/payment',
         'HOME': '/users/home'}
 
+
 # class InvalidUsage(Exception):
 #     status_code = 400
 #
@@ -112,7 +113,8 @@ def login():
                 '_id': json_id,
                 'token_created': token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES']
             })
-            result = jsonify({'token': access_token}), 200
+            result = jsonify({'token': access_token,
+                              'expiresIn': token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES']}), 200
             # result = redirect(REFS['DREAM'])
         else:
             result = jsonify({"error": "Invalid username or password"}), 422
@@ -136,7 +138,6 @@ def dream_register():
     user_id = get_jwt_identity()['_id']
     current_user = users.find_one({'_id': user_id})
     user_name = current_user['first_name'] + current_user['last_name']
-
 
     dream_id = dreams.insert({
         'title': title,
