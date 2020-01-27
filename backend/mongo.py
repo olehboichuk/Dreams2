@@ -65,7 +65,7 @@ def register():
     email = request.get_json()['email']
     phone_number = request.get_json()['phone_number']
     password = bcrypt.generate_password_hash(request.get_json()['password']).decode('utf-8')
-    wish_created = 'false'
+    dream_created = 'false'
     # created = datetime.utcnow()
 
     response = users.find_one({'email': email})
@@ -78,7 +78,7 @@ def register():
         'email': email,
         'phone_number': phone_number,
         'password': password,
-        'wish_created': wish_created
+        'dream_created': dream_created
     })
     new_user = users.find_one({'_id': user_id})
     if new_user:
@@ -106,13 +106,16 @@ def login():
 
     if response:
         if bcrypt.check_password_hash(response['password'], password):
+            dream_created = response["dream_created"]
             json_id = JSONEncoder().encode(response['_id'])
             token_created = datetime.utcnow()
             access_token = create_access_token(identity={
                 '_id': json_id,
-                'token_created': token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES']
+                'token_created': token_created
             })
-            result = jsonify({'token': access_token}), 200
+            result = jsonify({'token': access_token,
+                              'expiresIn':token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES'],
+                              'dream_created':dream_created}), 200
             # result = redirect(REFS['DREAM'])
         else:
             result = jsonify({"error": "Invalid username or password"}), 422
@@ -137,7 +140,6 @@ def dream_register():
     current_user = users.find_one({'_id': user_id})
     user_name = current_user['first_name'] + current_user['last_name']
 
-
     dream_id = dreams.insert({
         'title': title,
         'description': description,
@@ -151,6 +153,7 @@ def dream_register():
 
     new_dream = dreams.find_one({'_id': dream_id})
     if new_dream:
+        users.update({'_id': user_id}, {'dream_created': 'true'})
         return jsonify(message="Dream added successfully"), 201
     return jsonify(message="Some problems with adding new Dream"), 409
 
@@ -183,6 +186,21 @@ def get_all_dreams():
     result = jsonify(dreams_array), 200
     return result
 
+
+@app.route(REFS['HOME'], methods=['POST'])
+@jwt_required
+def dream_like():
+    dreams = mongo.db.dreams
+    dream_id = request.get_json()['_id']
+    action = request.get_json()['action']
+
+    dream = dreams.find_one({'_id': dream_id})
+    if action == 'like':
+        dreams.update({'_id': dream_id}, {'$inc': {'likes': 1}})
+    elif action == 'unlike':
+        dreams.update({'_id': dream_id}, {'$dec': {'likes': 1}})
+    return jsonify("jopa"),200
+    # менять юзеру статус лайка и активность поста 
 
 if __name__ == '__main__':
     app.run(debug=True)
