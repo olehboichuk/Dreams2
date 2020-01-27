@@ -13,6 +13,7 @@ export class MainPageComponent implements OnInit {
   private liked = false;
   public loading = false;
   private dreams: Dreams [] = [];
+  private listSize = 10;
 
   constructor(private formBuilder: FormBuilder, private registerService: MessageService, private router: Router) {
   }
@@ -20,13 +21,14 @@ export class MainPageComponent implements OnInit {
   ngOnInit() {
     const sortType = {
       sort_type: 'likes',
+      list_size: this.listSize,
     };
-    // this.registerService.getAllDreams(sortType).subscribe(data => {
-    //   console.log('ok');
-    //   }, error => {
-    //   console.warn('no ok');
-    //   }
-    // );
+    this.registerService.getAllDreams(sortType).subscribe(data => {
+        console.log('ok');
+      }, error => {
+        console.warn('no ok');
+      }
+    );
   }
 
   like() {

@@ -2,8 +2,8 @@
   <div class="info">
     <p class="info__headline">Мрії йопта</p>
   </div>
-  <div class="dreams">
-    <div class="dream" *ngFor="let dream of dreams">
+  <div class="dreams" *ngFor="let dream of dreams">
+    <div class="dream" *ngIf="dream.is_active">
       <div class="dream__header">
         <p class="dream__name">{{dream.title}}</p>
         <p class="dream__price">${{dream.price}}</p>
@@ -12,10 +12,10 @@
       <p class="dream__description">{{dream.description}}</p>
       <div class="separator"></div>
       <div class="dream__header">
-      <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>
+      <a class="dream__author" [routerLink]="['/user-profile',dream.author]">Команда БГБ</a>
 
       <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
-        <i class="fa fa-heart">❤</i>
+        <i class="fa fa-heart">❤{{dream.number_of_likes}}</i>
         <span>Like</span>
       </button>
       </div>
