@@ -125,6 +125,7 @@ def login():
 @jwt_required
 def dream_register():
     dreams = mongo.db.dreams
+    users = mongo.db.users
 
     title = request.get_json()['title']
     description = request.get_json()['description']
@@ -133,6 +134,9 @@ def dream_register():
     is_active = 'true'
 
     user_id = get_jwt_identity()['_id']
+    current_user = users.find_one({'_id': user_id})
+    user_name = current_user['first_name'] + current_user['last_name']
+
 
     dream_id = dreams.insert({
         'title': title,
@@ -140,8 +144,9 @@ def dream_register():
         'price': price,
         'number_of_likes': number_of_likes,
         'is_active': is_active,
-        'author': user_id,
-        'create_time': datetime.utcnow()
+        'author_id': user_id,
+        'create_time': datetime.utcnow(),
+        'author_name': user_name
     })
 
     new_dream = dreams.find_one({'_id': dream_id})
