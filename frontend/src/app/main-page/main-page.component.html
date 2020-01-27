@@ -12,8 +12,7 @@
       <p class="dream__description">{{dream.description}}</p>
       <div class="separator"></div>
       <div class="dream__header">
-      <a class="dream__author" [routerLink]="['/user-profile',dream.author]">Команда БГБ</a>
-
+      <a class="dream__author" [routerLink]="['/user-profile',dream.author]">{{dream.author_name}}</a>
       <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
         <i class="fa fa-heart">❤{{dream.number_of_likes}}</i>
         <span>Like</span>
@@ -21,82 +20,77 @@
       </div>
     </div>
 
+<!--    <div class="dream">-->
+<!--      <div class="dream__header">-->
+<!--        <p class="dream__name">Поїхати в Іспаніш</p>-->
+<!--        <p class="dream__price">$4000</p>-->
+<!--      </div>-->
+<!--      <div class="separator"></div>-->
+<!--      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на-->
+<!--        канал</p>-->
+<!--      <div class="separator"></div>-->
+<!--      <div class="dream__header">-->
+<!--        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>-->
+<!--        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">-->
+<!--          <i class="fa fa-heart">❤</i>-->
+<!--          <span>Like</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="dream">
-      <div class="dream__header">
-        <p class="dream__name">Поїхати в Іспаніш</p>
-        <p class="dream__price">$4000</p>
-      </div>
-      <div class="separator"></div>
-      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на
-        канал</p>
-      <div class="separator"></div>
-      <div class="dream__header">
-        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>
+<!--    <div class="dream">-->
+<!--      <div class="dream__header">-->
+<!--        <p class="dream__name">Поїхати в Іспаніш</p>-->
+<!--        <p class="dream__price">$4000</p>-->
+<!--      </div>-->
+<!--      <div class="separator"></div>-->
+<!--      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на-->
+<!--        канал</p>-->
+<!--      <div class="separator"></div>-->
+<!--      <div class="dream__header">-->
+<!--        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>-->
+<!--        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">-->
+<!--          <i class="fa fa-heart">❤</i>-->
+<!--          <span>Like</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
 
+<!--    <div class="dream">-->
+<!--      <div class="dream__header">-->
+<!--        <p class="dream__name">Поїхати в Іспаніш</p>-->
+<!--        <p class="dream__price">$4000</p>-->
+<!--      </div>-->
+<!--      <div class="separator"></div>-->
+<!--      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на-->
+<!--        канал</p>-->
+<!--      <div class="separator"></div>-->
+<!--      <div class="dream__header">-->
+<!--        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>-->
+<!--        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">-->
+<!--          <i class="fa fa-heart">❤</i>-->
+<!--          <span>Like</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
 
-        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
-          <i class="fa fa-heart">❤</i>
-          <span>Like</span>
-        </button>
-      </div>
-    </div>
-    <div class="dream">
-      <div class="dream__header">
-        <p class="dream__name">Поїхати в Іспаніш</p>
-        <p class="dream__price">$4000</p>
-      </div>
-      <div class="separator"></div>
-      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на
-        канал</p>
-      <div class="separator"></div>
-      <div class="dream__header">
-        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>
+<!--    <div class="dream">-->
+<!--      <div class="dream__header">-->
+<!--        <p class="dream__name">Поїхати в Іспаніш</p>-->
+<!--        <p class="dream__price">$4000</p>-->
+<!--      </div>-->
+<!--      <div class="separator"></div>-->
+<!--      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на-->
+<!--        канал</p>-->
+<!--      <div class="separator"></div>-->
+<!--      <div class="dream__header">-->
+<!--        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>-->
+<!--        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">-->
+<!--          <i class="fa fa-heart">❤</i>-->
+<!--          <span>Like</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
 
-
-        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
-          <i class="fa fa-heart">❤</i>
-          <span>Like</span>
-        </button>
-      </div>
-    </div>
-    <div class="dream">
-      <div class="dream__header">
-        <p class="dream__name">Поїхати в Іспаніш</p>
-        <p class="dream__price">$4000</p>
-      </div>
-      <div class="separator"></div>
-      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на
-        канал</p>
-      <div class="separator"></div>
-      <div class="dream__header">
-        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>
-
-
-        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
-          <i class="fa fa-heart">❤</i>
-          <span>Like</span>
-        </button>
-      </div>
-    </div>
-    <div class="dream">
-      <div class="dream__header">
-        <p class="dream__name">Поїхати в Іспаніш</p>
-        <p class="dream__price">$4000</p>
-      </div>
-      <div class="separator"></div>
-      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на
-        канал</p>
-      <div class="separator"></div>
-      <div class="dream__header">
-        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>
-
-
-        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
-          <i class="fa fa-heart">❤</i>
-          <span>Like</span>
-        </button>
-      </div>
-    </div>
   </div>
 </div>

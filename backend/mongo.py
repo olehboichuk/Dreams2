@@ -57,6 +57,11 @@ class JSONEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, o)
 
 
+def tostring(id_string):
+    if id_string[0] == '\"':
+        return id_string[1:-1]
+
+
 @app.route(REFS['REGISTER'], methods=['POST'])
 def register():
     users = mongo.db.users
@@ -106,7 +111,7 @@ def login():
 
     if response:
         if bcrypt.check_password_hash(response['password'], password):
-            dream_created = response["dream_created"]
+            dream_created = response['dream_created']
             json_id = JSONEncoder().encode(response['_id'])
             token_created = datetime.utcnow()
             access_token = create_access_token(identity={
@@ -114,8 +119,8 @@ def login():
                 'token_created': token_created
             })
             result = jsonify({'token': access_token,
-                              'expiresIn':token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES'],
-                              'dream_created':dream_created}), 200
+                              'expiresIn': token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES'],
+                              'dream_created': dream_created}), 200
             # result = redirect(REFS['DREAM'])
         else:
             result = jsonify({"error": "Invalid username or password"}), 422
@@ -137,7 +142,7 @@ def dream_register():
     is_active = 'true'
 
     user_id = get_jwt_identity()['_id']
-    current_user = users.find_one({'_id': user_id})
+    current_user = users.find_one({'_id': ObjectId(tostring(user_id))})
     user_name = current_user['first_name'] + current_user['last_name']
 
     dream_id = dreams.insert({
@@ -183,7 +188,7 @@ def get_all_dreams():
         dream['_id'] = JSONEncoder().encode(dream['_id'])
         dreams_array.append(dream)
     # dreams_array.reverse()
-    result = jsonify(dreams_array), 200
+    result = jsonify(dreams=dreams_array), 200
     return result
 
 
@@ -201,6 +206,7 @@ def dream_like():
         dreams.update({'_id': dream_id}, {'$dec': {'likes': 1}})
     return jsonify("jopa"),200
     # менять юзеру статус лайка и активность поста 
+
 
 if __name__ == '__main__':
     app.run(debug=True)
