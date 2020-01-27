@@ -129,7 +129,7 @@ def dream_register():
     title = request.get_json()['title']
     description = request.get_json()['description']
     price = request.get_json()['price']
-    number_of_likes = 5
+    number_of_likes = 0
     is_active = 'true'
 
     user_id = get_jwt_identity()['_id']
@@ -161,7 +161,9 @@ def get_all_dreams():
     if sort_type == 'likes':
         print("likes")
         sorted_dreams = dreams_db.find({'is_active': 'true'}).sort('number_of_likes', direction=pymongo.DESCENDING)
+        print("1")
         sorted_dreams.limit(list_size)
+        print("2")
     elif sort_type == 'create_time':
         print("datetime")
         sorted_dreams = dreams_db.find({'is_active': 'true'}).sort('create_time', direction=pymongo.DESCENDING)
@@ -171,13 +173,19 @@ def get_all_dreams():
         return jsonify(message="Wrong sorting code"), 422
 
     dreams_array = []
+    print("3")
     for dream in sorted_dreams:
+        print("4")
         dream['_id'] = JSONEncoder().encode(dream['_id'])
+        print("5")
         dreams_array.append(dream)
+        print("6")
     # dreams_array.reverse()
-    result = jsonify(dreams_array), 200
+    print("7")
+    result = jsonify(dreams=dreams_array), 200
+    print("8")
     return result
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

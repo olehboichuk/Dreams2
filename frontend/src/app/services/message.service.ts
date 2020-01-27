@@ -38,19 +38,20 @@ export class MessageService {
     return this.http.post(this.dreamRegURL, dream);
   }
 
-  getAllDreams(likes: { sort_type: string }) {
-    return this.http.post(this.dreamsURL, likes);
+  getAllDreams(sortType: { sort_type: string, list_size: number }) {
+    return this.http.post(this.dreamsURL, sortType);
   }
 
   isLoggedIn() {
+    console.log(moment(new Date().toUTCString()).isBefore(this.getExpiration()));
     return moment(new Date().toUTCString()).isBefore(this.getExpiration());
   }
 
   getExpiration() {
-        const expiration = localStorage.getItem("expires_at");
-        const expiresAt = JSON.parse(expiration);
-        return moment(expiresAt);
-    }
+    const expiration = localStorage.getItem("expires_at");
+    const expiresAt = JSON.parse(expiration);
+    return moment(expiresAt);
+  }
 
   logoutUser() {
     this.http.get(this.logoutURL);
