@@ -25,42 +25,22 @@ REFS = {'REGISTER': '/users/register',
         'LOGIN': '/users/login',
         'DREAM': '/users/dream-register',
         'PAYMENT': '/users/payment',
-        'HOME': '/users/home'}
-
-
-# class InvalidUsage(Exception):
-#     status_code = 400
-#
-#     def init(self, message, status_code=None, payload=None):
-#         Exception.init(self)
-#         self.message = message
-#         if status_code is not None:
-#             self.status_code = status_code
-#         self.payload = payload
-#
-#     def to_dict(self):
-#         rv = dict(self.payload or ())
-#         rv['message'] = self.message
-#         return rv
-#
-#
-# @app.errorhandler(InvalidUsage)
-# def handle_invalid_usage(error):
-#     response = jsonify(error.to_dict())
-#     response.status_code = error.status_code
-#     return response
+        'HOME': '/users/home',
+        'LIKE': '/users/user/like',
+        'USER_HOME': '/users/user/home'}
 
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, ObjectId):
-            return str(o)
+            return tostring(str(o))
         return json.JSONEncoder.default(self, o)
 
 
 def tostring(id_string):
     if id_string[0] == '\"':
         return id_string[1:-1]
+    return id_string
 
 
 @app.route(REFS['REGISTER'], methods=['POST'])
@@ -84,11 +64,17 @@ def register():
         'email': email,
         'phone_number': phone_number,
         'password': password,
-        'dream_created': dream_created
+        'dream_created': dream_created,
+        'liked_dreams': []
     })
     new_user = users.find_one({'_id': user_id})
     if new_user:
-        json_id = JSONEncoder().encode(user_id)
+        json_id = tostring(JSONEncoder().encode(user_id))
+        # print()
+        # users.update({'_id': user_id}, {'_id': json_id})
+        # print(users.find_one({'_id': json_id}))
+        # new_user['_id'] = json_id
+        # print(users.find_one({'_id': json_id}))
         token_created = datetime.utcnow()
         access_token = create_access_token(identity={
             '_id': json_id,
@@ -140,10 +126,11 @@ def dream_register():
     description = request.get_json()['description']
     price = request.get_json()['price']
     number_of_likes = 0
-    is_active = 'true'
+    is_active = 'false'
 
     user_id = get_jwt_identity()['_id']
-    current_user = users.find_one({'_id': ObjectId(tostring(user_id))})
+    print(user_id)
+    current_user = users.find_one({'_id': ObjectId(user_id)})
     user_name = current_user['first_name'] + ' ' + current_user['last_name']
 
     dream_id = dreams.insert({
@@ -159,7 +146,10 @@ def dream_register():
 
     new_dream = dreams.find_one({'_id': dream_id})
     if new_dream:
-        users.update({'_id': user_id}, {'dream_created': 'true'})
+        users.update({'_id': ObjectId(user_id)}, {'dream_created': 'true'})
+        print(users.find_one({'_id': ObjectId(user_id)}))
+        # dreams.update({'_id': new_dream}, {'_id': tostring(JSONEncoder().encode(new_dream))})
+        # print(new_dream['_id'])
         return jsonify(message="Dream added successfully"), 201
     return jsonify(message="Some problems with adding new Dream"), 409
 
@@ -167,10 +157,8 @@ def dream_register():
 @app.route(REFS['HOME'], methods=['POST'])
 def get_all_dreams():
     sort_type = request.get_json()['sort_type']
-    # page_size = request.get_json()['page_size']
     list_size = request.get_json()['list_size']
     dreams_db = mongo.db.dreams
-    sorted_dreams = []
 
     if sort_type == 'likes':
         print("likes")
@@ -188,24 +176,98 @@ def get_all_dreams():
     for dream in sorted_dreams:
         dream['_id'] = JSONEncoder().encode(dream['_id'])
         dreams_array.append(dream)
-    # dreams_array.reverse()
+
     result = jsonify(dreams=dreams_array), 200
     return result
 
 
-@app.route(REFS['HOME'], methods=['POST'])
+@app.route(REFS['USER_HOME'], methods=['POST'])
+@jwt_required
+def get_all_dreams_logged():
+    dreams_db = mongo.db.dreams
+    users = mongo.db.users
+
+    sort_type = request.get_json()['sort_type']
+    list_size = request.get_json()['list_size']
+    user_id = get_jwt_identity()['_id']
+    current_user = users.find_one({'_id': ObjectId(user_id)})
+
+    if not current_user:
+        return jsonify(message='This user does not exist'), 422
+
+    if sort_type == 'likes':
+        print('likes')
+        sorted_dreams = dreams_db.find({'is_active': 'true'}).sort('number_of_likes', direction=pymongo.DESCENDING)
+        sorted_dreams.limit(list_size)
+    elif sort_type == 'create_time':
+        print('datetime')
+        sorted_dreams = dreams_db.find({'is_active': 'true'}).sort('create_time', direction=pymongo.DESCENDING)
+        sorted_dreams.limit(list_size)
+    else:
+        print('else')
+        return jsonify(message='Wrong sorting code'), 422
+
+    try:
+        likes_array = current_user['liked_dreams']
+    except KeyError:
+        likes_array = []
+
+    dreams_array = []
+    for dream in sorted_dreams:
+        dream['_id'] = JSONEncoder().encode(dream['_id'])
+        if dream['_id'] in likes_array:
+            dream['_liked'] = 'true'
+        else:
+            dream['_liked'] = 'false'
+        print(dream['_liked'])
+        dreams_array.append(dream)
+    result = jsonify(dreams=dreams_array), 200
+    return result
+
+
+@app.route(REFS['LIKE'], methods=['POST'])
 @jwt_required
 def dream_like():
     dreams = mongo.db.dreams
+    users = mongo.db.users
     dream_id = request.get_json()['_id']
     action = request.get_json()['action']
 
-    dream = dreams.find_one({'_id': dream_id})
+    user_id = get_jwt_identity()['_id']
+    current_user = users.find_one({'_id': ObjectId(user_id)})
+    dream = dreams.find_one({'_id': ObjectId(dream_id)})
+    print(dream)
+    try:
+        likes_array = current_user['liked_dreams']
+    except KeyError:
+        likes_array = []
+    if not dream:
+        return jsonify(message='Dream not found'), 404
+
     if action == 'like':
-        dreams.update({'_id': dream_id}, {'$inc': {'likes': 1}})
+        if dream_id in likes_array:
+            return jsonify(message='This dream is already liked'), 422
+        dreams.update({'_id': ObjectId(dream_id)}, {'$inc': {'number_of_likes': 1}})
+        user_dream = dreams.find_one({'author_id': ObjectId(user_id)})
+        if len(likes_array) == 0 and user_dream['is_active'] != 'true':
+            dreams.update({'_id': user_dream['_id']}, {'is_active': 'true'})
+            print("second dream update")
+            print(dreams.find_one({'_id': user_dream['_id']}))
+        likes_array.append(dream_id)
+        users.update({'_id': ObjectId(user_id)}, {'liked_dreams': likes_array})
+
     elif action == 'unlike':
-        dreams.update({'_id': dream_id}, {'$dec': {'likes': 1}})
-    return jsonify(message="jopa"), 200
+        if dream_id not in likes_array:
+            return jsonify(message='This dream has not been liked'), 422
+        dreams.update({'_id': ObjectId(dream_id)}, {'$dec': {'number_of_likes': 1}})
+        likes_array.remove(dream_id)
+        if len(likes_array) == 0:
+            dreams.update({'_id': ObjectId(dream_id)}, {'is_active': 'false'})
+        users.update({'_id': ObjectId(user_id)}, {'liked_dreams': likes_array})
+    else:
+        return jsonify(message="Wrong like action"), 422
+
+    return jsonify(message='dream was liked successfully'), 200
     # менять юзеру статус лайка и активность поста 
 
 
