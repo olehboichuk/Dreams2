@@ -94,6 +94,28 @@ $form_color: #FFFFFF;
   }
 }
 
+.sort__buttons{
+  display: flex;
+}
+
+.sort__button{
+  outline: none;
+  margin-right: 10px;
+  //box-shadow: 0px 0px 20px 3px #d6d6d6;
+  &:last-child{
+    margin-right: 0;
+  }
+}
+
+.active__sort{
+  outline: none;
+  margin-right: 10px;
+  box-shadow: inset 0px 0px 3px 3px #d6d6d6;
+  &:last-child{
+    margin-right: 0;
+  }
+}
+
 
 
 .button-like {

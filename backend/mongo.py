@@ -205,7 +205,7 @@ def dream_like():
         dreams.update({'_id': dream_id}, {'$inc': {'likes': 1}})
     elif action == 'unlike':
         dreams.update({'_id': dream_id}, {'$dec': {'likes': 1}})
-    return jsonify(message="jopa"), 200
+    return jsonify(message="success"), 200
     # менять юзеру статус лайка и активность поста 
 
 
