@@ -71,9 +71,8 @@ export class SignUpComponent implements OnInit {
     this.registerForm.controls['confirmPassword'].disable();
     this.registerService.register(user)
       .subscribe(data => {
-          const expiresAt = moment.utc().add(data.expiresIn, 'second');
-          localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
           localStorage.setItem('id_token', data.token);
+          localStorage.setItem("expires_at", JSON.stringify(data.expiresIn));
           console.log('success');
           this.router.navigate(['/dream-register']);
         },

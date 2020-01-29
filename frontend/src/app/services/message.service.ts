@@ -5,6 +5,7 @@ import {Token} from "../models/token";
 import {Registration} from "../models/registration";
 import {Dreamregister} from "../models/dreamregister";
 import * as moment from "moment";
+import {Dreams} from "../models/dreams";
 
 @Injectable({
   providedIn: 'root'
@@ -39,11 +40,14 @@ export class MessageService {
   }
 
   getAllDreams(sortType: { sort_type: string, list_size: number }) {
-    return this.http.post(this.dreamsURL, sortType);
+    return this.http.post<{ dreams: Dreams[] }>(this.dreamsURL, sortType);
   }
 
   isLoggedIn() {
-    console.log(moment(new Date().toUTCString()).isBefore(this.getExpiration()));
+    if (!moment(new Date().toUTCString()).isBefore(this.getExpiration()) && localStorage.getItem("id_token")) {
+      localStorage.removeItem("id_token");
+      localStorage.removeItem("expires_at");
+    }
     return moment(new Date().toUTCString()).isBefore(this.getExpiration());
   }
 

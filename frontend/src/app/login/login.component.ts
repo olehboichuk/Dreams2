@@ -52,9 +52,8 @@ export class LoginComponent implements OnInit {
     this.loginForm.controls['password'].disable();
     this.loginService.login(user)
       .subscribe(data => {
-          const expiresAt = moment().add(data.expiresIn, 'second');
           localStorage.setItem('id_token', data.token);
-          localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+          localStorage.setItem("expires_at", JSON.stringify(data.expiresIn));
           this.router.navigate(['/']);
         },
         error => {
