@@ -7,7 +7,7 @@ $hover_text: #0f89ff;
 $active_btn: #222428;
 $form_color: #FFFFFF;
 
-.content{
+.content {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,34 +15,14 @@ $form_color: #FFFFFF;
   background: $form_color;
 }
 
-.info__headline{
-  font-family: $header_font;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 40px;
-  line-height: 56px;
-  letter-spacing: 0.105em;
-  text-transform: uppercase;
-  color: $header_text_color;
-}
-
-.dreams{
-  display: flex;
-  flex-wrap: wrap;
-  width: 90%;
-}
-
-.dream{
+.dream {
   padding: 10px;
-  width: 50%;
+  width: 80%;
   box-sizing: border-box;
-  &:hover{
-    box-shadow: 10px 20px 16px 0px #d6d6d6;
-  }
 }
 
-.dream__name{
-  font-size: 18px;
+.dream__name {
+  font-size: 28px;
   letter-spacing: 0.105em;
   font-family: $header_font;
   font-style: normal;
@@ -50,8 +30,10 @@ $form_color: #FFFFFF;
   color: $header_text_color;
 }
 
-.dream__price{
+.dream__price {
+  text-align: center;
   font-size: 18px;
+  margin-bottom: 10px;
   letter-spacing: 0.105em;
   font-family: $header_font;
   font-style: normal;
@@ -59,62 +41,36 @@ $form_color: #FFFFFF;
   color: $header_text_color;
 }
 
-.dream__description{
-  font-size: 15px;
+.dream__description {
+  font-size: 22px;
   letter-spacing: 0.105em;
   font-family: $header_font;
+  text-align: center;
   font-style: normal;
   color: #8a8a8a;
 }
 
-.dream__author{
-  text-decoration: none;
-}
-
-.separator{
+.separator {
   margin-bottom: 8px;
   font-size: 15px;
   border-bottom: 2px solid #8a8a8a;
 }
 
-.dream__header{
+.dream__header {
   align-items: center;
   display: flex;
   box-sizing: border-box;
-  justify-content: space-between;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
 .dream__author {
   font-family: $header_font;
-  color: $a_text_color;
-  cursor: pointer;
-
-  &:hover {
-    color: $hover_text;
-  }
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 40px;
+  text-decoration: none;
 }
-
-.sort__buttons{
-  display: flex;
-}
-
-.sort__button{
-  outline: none;
-  margin-right: 10px;
-  &:last-child{
-    margin-right: 0;
-  }
-}
-
-.active__sort{
-  outline: none;
-  margin-right: 10px;
-  box-shadow: inset 0px 0px 3px 3px #d6d6d6;
-  &:last-child{
-    margin-right: 0;
-  }
-}
-
 
 
 .button-like {

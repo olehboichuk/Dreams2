@@ -6,6 +6,7 @@ import {Registration} from "../models/registration";
 import {Dreamregister} from "../models/dreamregister";
 import * as moment from "moment";
 import {Dreams} from "../models/dreams";
+import {Profile} from "../models/profile";
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,15 @@ export class MessageService {
   private dreamRegURL = 'http://localhost:5000/users/dream-register';
   private dreamsURL = 'http://localhost:5000/users/home';
   private logoutURL = 'http://localhost:5000/logout';
+  private profileURL = 'http://localhost:5000/profile/';
+
   public _logInUser = false;
 
   constructor(private http: HttpClient) {
+  }
+
+  profile(id:string) {
+    return this.http.get<{ profile: Profile }>(this.profileURL + id);
   }
 
   login(user: Authentificationrequest) {

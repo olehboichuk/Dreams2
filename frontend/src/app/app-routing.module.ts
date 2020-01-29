@@ -4,6 +4,7 @@ import {SignUpComponent} from "./sign-up/sign-up.component";
 import {DreamFormComponent} from "./dream-form/dream-form.component";
 import {LoginComponent} from "./login/login.component";
 import {MainPageComponent} from "./main-page/main-page.component";
+import {UserProfileComponent} from "./user-profile/user-profile.component";
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: SignUpComponent},
   {path: 'dream-register', component: DreamFormComponent},
+  {path: 'user-profile/:userId', component: UserProfileComponent},
 ];
 
 
