@@ -271,5 +271,34 @@ def dream_like():
     # менять юзеру статус лайка и активность поста 
 
 
+@app.route('/profile', methods=['POST'])
+@jwt_required
+def profile():
+    dreams = mongo.db.dreams
+
+    user_id = get_jwt_identity()['_id']
+    dream = dreams.find_one({'author_id': user_id})
+
+    if not dream:
+        return jsonify("Can't find users dream"), 404
+
+    title = dream['title']
+    description = dream['description']
+    price = dream['price']
+    is_active = dream['is_active']
+    number_of_likes = dream['number_of_likes']
+    author_name = dream['author_name']
+
+    return jsonify({
+        'title': title,
+        'description': description,
+        'price': price,
+        'is_active': is_active,
+        'number_of_likes': number_of_likes,
+        'author_name': author_name,
+    }), 201
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
