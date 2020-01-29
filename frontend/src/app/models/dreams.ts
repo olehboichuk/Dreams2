@@ -1,6 +1,6 @@
 export class Dreams {
-  public _id: number;
-  public author_id: number;
+  public _id: string;
+  public author_id: string;
   public author_name: string;
   public create_time: string;
   public description: string;

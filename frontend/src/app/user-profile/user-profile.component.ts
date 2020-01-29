@@ -13,18 +13,21 @@ export class UserProfileComponent implements OnInit {
   liked = false;
   private speakerId: string;
   private profile: Profile;
+  loading = true;
 
   constructor(private registerService: MessageService, public route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('userId')) {
         this.speakerId = paramMap.get('userId');
         this.registerService.profile(this.speakerId).subscribe(res => {
           this.profile = res.profile;
-        },error => {
-          console.warn('hui');
+          this.loading = false;
+        }, error => {
+          console.warn('no ok');
         });
       }
     });

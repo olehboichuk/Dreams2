@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="dream" >
+  <div class="dream" *ngIf="!loading">
     <p class="dream__author">{{profile.author_name}}</p>
     <div class="dream__header">
       <p class="dream__name">{{profile.title}}</p>

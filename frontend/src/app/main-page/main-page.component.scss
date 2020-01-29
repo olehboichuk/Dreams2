@@ -7,7 +7,7 @@ $hover_text: #0f89ff;
 $active_btn: #222428;
 $form_color: #FFFFFF;
 
-.content{
+.content {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +15,7 @@ $form_color: #FFFFFF;
   background: $form_color;
 }
 
-.info__headline{
+.info__headline {
   font-family: $header_font;
   font-style: normal;
   font-weight: 300;
@@ -26,22 +26,43 @@ $form_color: #FFFFFF;
   color: $header_text_color;
 }
 
-.dreams{
+.dreams {
   display: flex;
   flex-wrap: wrap;
-  width: 90%;
 }
 
-.dream{
+.allContent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 90%;
+  max-height: 75vh;
+  overflow-y: auto !important;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background: #fdfeff;
+    mix-blend-mode: normal;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #d7dce9;
+    border-radius: 2px;
+  }
+}
+
+.dream {
   padding: 10px;
   width: 50%;
   box-sizing: border-box;
-  &:hover{
+
+  &:hover {
     box-shadow: 10px 20px 16px 0px #d6d6d6;
   }
 }
 
-.dream__name{
+.dream__name {
   font-size: 18px;
   letter-spacing: 0.105em;
   font-family: $header_font;
@@ -50,7 +71,7 @@ $form_color: #FFFFFF;
   color: $header_text_color;
 }
 
-.dream__price{
+.dream__price {
   font-size: 18px;
   letter-spacing: 0.105em;
   font-family: $header_font;
@@ -59,7 +80,7 @@ $form_color: #FFFFFF;
   color: $header_text_color;
 }
 
-.dream__description{
+.dream__description {
   font-size: 15px;
   letter-spacing: 0.105em;
   font-family: $header_font;
@@ -67,17 +88,17 @@ $form_color: #FFFFFF;
   color: #8a8a8a;
 }
 
-.dream__author{
+.dream__author {
   text-decoration: none;
 }
 
-.separator{
+.separator {
   margin-bottom: 8px;
   font-size: 15px;
   border-bottom: 2px solid #8a8a8a;
 }
 
-.dream__header{
+.dream__header {
   align-items: center;
   display: flex;
   box-sizing: border-box;
@@ -94,27 +115,28 @@ $form_color: #FFFFFF;
   }
 }
 
-.sort__buttons{
+.sort__buttons {
   display: flex;
 }
 
-.sort__button{
+.sort__button {
   outline: none;
   margin-right: 10px;
-  &:last-child{
+
+  &:last-child {
     margin-right: 0;
   }
 }
 
-.active__sort{
+.active__sort {
   outline: none;
   margin-right: 10px;
   box-shadow: inset 0px 0px 3px 3px #d6d6d6;
-  &:last-child{
+
+  &:last-child {
     margin-right: 0;
   }
 }
-
 
 
 .button-like {

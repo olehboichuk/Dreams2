@@ -17,6 +17,7 @@ export class MainPageComponent implements OnInit {
   dataSort = false;
   yourSort = false;
   likesSort = true;
+  moreTen: boolean;
 
   constructor(private formBuilder: FormBuilder, private registerService: MessageService, private router: Router) {
   }
@@ -29,6 +30,11 @@ export class MainPageComponent implements OnInit {
     };
     this.registerService.getAllDreams(sortType).subscribe(data => {
         this.dreams = data.dreams;
+        if(this.dreams.length>=this.listSize){
+          this.moreTen = true;
+        }else {
+          this.moreTen = false;
+        }
       }, error => {
         console.warn('no ok');
       }
@@ -79,5 +85,24 @@ export class MainPageComponent implements OnInit {
     this.yourSort = true;
     this.likesSort = false;
     this.dataSort = false;
+  }
+
+  moreDreams() {
+    this.listSize+=10;
+    const sortType = {
+      sort_type: 'likes',
+      list_size: this.listSize,
+    };
+    this.registerService.getAllDreams(sortType).subscribe(data => {
+        this.dreams = data.dreams;
+        if(this.dreams.length>=this.listSize){
+          this.moreTen = true;
+        }else {
+          this.moreTen = false;
+        }
+      }, error => {
+        console.warn('no ok');
+      }
+    );
   }
 }

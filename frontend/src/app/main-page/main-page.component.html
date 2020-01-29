@@ -3,12 +3,13 @@
     <p class="info__headline">Мрії йопта</p>
   </div>
   <div class="sort__buttons">
-    <button mat-button (click)="sortData()" [ngClass]="{'sort__button':!dataSort,'active__sort':dataSort}">DATE</button>
-    <button mat-button (click)="sortYour()" [ngClass]="{'sort__button':!yourSort,'active__sort':yourSort}">YOUR LIKES
+    <button mat-button (click)="sortData()" [ngClass]="{'sort__button':!dataSort,'active__sort':dataSort}">ДАТА</button>
+    <button mat-button (click)="sortYour()" [ngClass]="{'sort__button':!yourSort,'active__sort':yourSort}">ВАШІ ЛАЙКИ
     </button>
-    <button mat-button (click)="sortLikes()" [ngClass]="{'sort__button':!likesSort,'active__sort':likesSort}">LIKES
+    <button mat-button (click)="sortLikes()" [ngClass]="{'sort__button':!likesSort,'active__sort':likesSort}">ЛАЙКИ
     </button>
   </div>
+<div class="allContent">
   <div class="dreams">
     <div class="dream" *ngFor="let dream of dreams">
       <div *ngIf="dream.is_active">
@@ -30,4 +31,6 @@
       </div>
     </div>
   </div>
+  <button class="more" *ngIf="moreTen" mat-button (click)="moreDreams()">ПОКАЗАТИ ЩЕ</button>
+</div>
 </div>

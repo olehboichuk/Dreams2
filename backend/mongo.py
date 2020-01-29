@@ -276,7 +276,6 @@ def profile(profid):
     dreams = mongo.db.dreams
     user_id = tostring(profid)
     dream = dreams.find_one({'author_id': user_id})
-    print(user_id)
     if not dream:
         return jsonify("Can't find users dream"), 404
     title = dream['title']
