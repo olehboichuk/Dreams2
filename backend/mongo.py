@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, json, redirect
+from flask import Flask, jsonify, request, json
 from flask_pymongo import PyMongo
 import pymongo
 from bson.objectid import ObjectId
@@ -33,12 +33,14 @@ REFS = {'REGISTER': '/users/register',
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, ObjectId):
+            print("user_id: " + str(o))
+            # print("tostring user_id: " + tostring(str(o)))
             return tostring(str(o))
         return json.JSONEncoder.default(self, o)
 
 
 def tostring(id_string):
-    if id_string[0] == '\"':
+    if id_string[0] == '\"' or id_string[0] == '"':
         return id_string[1:-1]
     return id_string
 
@@ -70,10 +72,9 @@ def register():
     new_user = users.find_one({'_id': user_id})
     if new_user:
         json_id = tostring(JSONEncoder().encode(user_id))
-        # print()
-        # users.update({'_id': user_id}, {'_id': json_id})
-        # print(users.find_one({'_id': json_id}))
-        # new_user['_id'] = json_id
+        print("in new user: " + json_id)
+        x = "weertewt"
+        print("in new user: " + x)
         # print(users.find_one({'_id': json_id}))
         token_created = datetime.utcnow()
         access_token = create_access_token(identity={
@@ -99,7 +100,7 @@ def login():
     if response:
         if bcrypt.check_password_hash(response['password'], password):
             dream_created = response['dream_created']
-            json_id = JSONEncoder().encode(response['_id'])
+            json_id = tostring(JSONEncoder().encode(response['_id']))
             token_created = datetime.utcnow()
             access_token = create_access_token(identity={
                 '_id': json_id,
@@ -214,7 +215,7 @@ def get_all_dreams_logged():
 
     dreams_array = []
     for dream in sorted_dreams:
-        dream['_id'] = JSONEncoder().encode(dream['_id'])
+        dream['_id'] = tostring(JSONEncoder().encode(dream['_id']))
         if dream['_id'] in likes_array:
             dream['_liked'] = 'true'
         else:
@@ -244,10 +245,8 @@ def dream_like():
         return jsonify(message='User not found'), 404
     if action == 'like':
         response = update_like_list(user_id, dream_id, action='like')
-        dreams.update({'_id': ObjectId(dream_id)}, {'$inc': {'number_of_likes': 1}})
     elif action == 'unlike':
         response = update_like_list(user_id, dream_id, action='dislike')
-        dreams.update({'_id': ObjectId(dream_id)}, {'$dec': {'number_of_likes': 1}})
     else:
         return jsonify(message="Wrong like action"), 422
     return response
@@ -276,6 +275,7 @@ def profile(profid):
         'author_name': author_name,
     }), 201
     return result
+
 
 def update_my_dream_status(like_list, dream_id):     # like_list - user['liked_dreams']; dream_id - ObjectId !!!
     dreams = mongo.db.dreams
