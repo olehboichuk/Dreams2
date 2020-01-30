@@ -20,8 +20,6 @@ import {animate, style, transition, trigger} from "@angular/animations";
   ],
 })
 export class MainPageComponent implements OnInit {
-  private liked = false;
-  public loading = false;
   private dreams: Dreams [] = [];
   private listSize = 10;
   dataSort = false;
@@ -38,24 +36,55 @@ export class MainPageComponent implements OnInit {
       sort_type: 'likes',
       list_size: this.listSize,
     };
-    this.registerService.getAllDreams(sortType).subscribe(data => {
-        this.dreams = data.dreams;
-        if (this.dreams.length >= this.listSize) {
-          this.moreTen = true;
-        } else {
-          this.moreTen = false;
+    if (localStorage.getItem("id_token")) {
+      this.registerService.getAllLoginedDreams(sortType).subscribe(data => {
+          this.dreams = data.dreams;
+          if (this.dreams.length >= this.listSize) {
+            this.moreTen = true;
+          } else {
+            this.moreTen = false;
+          }
+          console.warn('loggg');
+        }, error => {
+          console.warn('no ok');
         }
+      );
+    } else {
+      this.registerService.getAllDreams(sortType).subscribe(data => {
+          this.dreams = data.dreams;
+          if (this.dreams.length >= this.listSize) {
+            this.moreTen = true;
+          } else {
+            this.moreTen = false;
+          }
+          console.warn('No loggg');
+        }, error => {
+          console.warn('no ok');
+        }
+      );
+    }
+
+  }
+
+  like(id: string, isLiked: string) {
+    let like = {
+      _id: id,
+      action: 'like',
+    };
+    if (isLiked == 'true') {
+      like = {
+        _id: id,
+        action: 'unlike',
+      };
+    }
+    this.registerService.like(like).subscribe(data => {
+        this.ngOnInit();
+        console.warn('pzdts ok ok');
       }, error => {
         console.warn('no ok');
       }
     );
-  }
 
-  like() {
-    if (this.liked == true)
-      this.liked = false;
-    else
-      this.liked = true;
   }
 
 

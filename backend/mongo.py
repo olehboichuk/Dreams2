@@ -175,7 +175,8 @@ def get_all_dreams():
 
     dreams_array = []
     for dream in sorted_dreams:
-        dream['_id'] = JSONEncoder().encode(dream['_id'])
+        dream['_id'] = tostring(JSONEncoder().encode(dream['_id']))
+        dream['_liked'] = 'false'
         dreams_array.append(dream)
 
     result = jsonify(dreams=dreams_array), 200
@@ -231,7 +232,7 @@ def get_all_dreams_logged():
 def dream_like():
     dreams = mongo.db.dreams
     users = mongo.db.users
-    dream_id = request.get_json()['_id']
+    dream_id = tostring(request.get_json()['_id'])
     action = request.get_json()['action']
 
     user_id = get_jwt_identity()['_id']
@@ -246,7 +247,7 @@ def dream_like():
     if action == 'like':
         response = update_like_list(user_id, dream_id, action='like')
     elif action == 'unlike':
-        response = update_like_list(user_id, dream_id, action='dislike')
+        response = update_like_list(user_id, dream_id, action='unlike')
     else:
         return jsonify(message="Wrong like action"), 422
     return response
@@ -277,7 +278,7 @@ def profile(profid):
     return result
 
 
-def update_my_dream_status(like_list, dream_id):     # like_list - user['liked_dreams']; dream_id - ObjectId !!!
+def update_my_dream_status(like_list, dream_id):  # like_list - user['liked_dreams']; dream_id - ObjectId !!!
     dreams = mongo.db.dreams
     dream = dreams.find_one({'_id': dream_id})
     if not dream:
@@ -292,7 +293,7 @@ def update_my_dream_status(like_list, dream_id):     # like_list - user['liked_d
     print(dreams.find_one({'_id': dream_id}))
 
 
-def update_like_list(user_id, dream_id, action):     # action = 'like' or 'dislike' depending on query
+def update_like_list(user_id, dream_id, action):  # action = 'like' or 'dislike' depending on query
     users = mongo.db.users
     dreams = mongo.db.dreams
     user = users.find_one({'_id': ObjectId(user_id)})
@@ -312,7 +313,7 @@ def update_like_list(user_id, dream_id, action):     # action = 'like' or 'disli
         like_list.append(dream_id)
         update_my_dream_status(like_list, user_dream['_id'])
 
-    elif action == 'dislike':
+    elif action == 'unlike':
         if dream_id not in like_list:
             print("This dream has not been liked yet")
             return jsonify(message='This dream has not been liked'), 422
@@ -321,15 +322,15 @@ def update_like_list(user_id, dream_id, action):     # action = 'like' or 'disli
 
     users.update({'_id': ObjectId(user_id)}, {'$set': {'liked_dreams': like_list}})
     update_like_counter(dream_id, action)
-    return jsonify("Dream is liked"), 200
+    return jsonify(message="Dream is liked"), 200
 
 
-def update_like_counter(dream_id, action):     # action = 'like' or 'dislike'
+def update_like_counter(dream_id, action):  # action = 'like' or 'dislike'
     dreams = mongo.db.dreams
     if action == 'like':
         dreams.update({'_id': ObjectId(dream_id)}, {'$inc': {'number_of_likes': 1}})
-    elif action == 'dislike':
-        dreams.update({'_id': ObjectId(dream_id)}, {'$dec': {'number_of_likes': 1}})
+    elif action == 'unlike':
+        dreams.update({'_id': ObjectId(dream_id)}, {'$inc': {'number_of_likes': -1}})
 
 
 if __name__ == '__main__':

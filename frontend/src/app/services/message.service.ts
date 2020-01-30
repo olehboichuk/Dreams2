@@ -7,6 +7,7 @@ import {Dreamregister} from "../models/dreamregister";
 import * as moment from "moment";
 import {Dreams} from "../models/dreams";
 import {Profile} from "../models/profile";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,17 @@ export class MessageService {
   private signInURL = 'http://localhost:5000/users/register';
   private dreamRegURL = 'http://localhost:5000/users/dream-register';
   private dreamsURL = 'http://localhost:5000/users/home';
+  private dreamsLogenedURL = 'http://localhost:5000/users/user/home';
   private logoutURL = 'http://localhost:5000/logout';
   private profileURL = 'http://localhost:5000/profile/';
+  private likeURL = 'http://localhost:5000/users/user/like';
 
   public _logInUser = false;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
-  profile(id:string) {
+  profile(id: string) {
     return this.http.get<{ profile: Profile }>(this.profileURL + id);
   }
 
@@ -36,6 +39,7 @@ export class MessageService {
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
     this._logInUser = false;
+    this.router.navigate(['/login']);
   }
 
   register(user: Registration) {
@@ -48,6 +52,10 @@ export class MessageService {
 
   getAllDreams(sortType: { sort_type: string, list_size: number }) {
     return this.http.post<{ dreams: Dreams[] }>(this.dreamsURL, sortType);
+  }
+
+  getAllLoginedDreams(sortType: { sort_type: string, list_size: number }) {
+    return this.http.post<{ dreams: Dreams[] }>(this.dreamsLogenedURL, sortType);
   }
 
   isLoggedIn() {
@@ -69,4 +77,9 @@ export class MessageService {
     this._logInUser = false;
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
+
+  like(like: { _id: string, action: string }) {
+    return this.http.post(this.likeURL, like);
+  }
+
 }

@@ -22,7 +22,7 @@
           <div class="separator"></div>
           <div class="dream__header">
             <a class="dream__author" [routerLink]="['/user-profile',dream.author_id]">{{dream.author_name}}</a>
-            <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
+            <button (click)="like(dream._id, dream._liked)" [ngClass]="{'button button-like':true, 'liked': true ? (dream._liked == 'true') : false}">
               <i class="fa fa-heart">❤</i>
               <span>{{dream.number_of_likes}}</span>
             </button>
