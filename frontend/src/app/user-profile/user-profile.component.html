@@ -1,0 +1,17 @@
+<div class="content">
+  <div class="dream" *ngIf="!loading">
+    <p class="dream__author">{{profile.author_name}}</p>
+    <div class="dream__header">
+      <p class="dream__name">{{profile.title}}</p>
+    </div>
+    <p class="dream__price">${{profile.price}}</p>
+    <p class="dream__description">{{profile.description}}</p>
+    <div class="separator"></div>
+    <div class="dream__header">
+      <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
+        <i class="fa fa-heart">❤{{profile.number_of_likes}}</i>
+        <span>Like</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -3,12 +3,13 @@
     <p class="info__headline">Мрії йопта</p>
   </div>
   <div class="sort__buttons">
-    <button mat-button (click)="sortData()" [ngClass]="{'sort__button':!dataSort,'active__sort':dataSort}">DATE</button>
-    <button mat-button (click)="sortYour()" [ngClass]="{'sort__button':!yourSort,'active__sort':yourSort}">YOUR LIKES
+    <button mat-button (click)="sortData()" [ngClass]="{'sort__button':!dataSort,'active__sort':dataSort}">ДАТА</button>
+    <button mat-button (click)="sortYour()" [ngClass]="{'sort__button':!yourSort,'active__sort':yourSort}">ВАШІ ЛАЙКИ
     </button>
-    <button mat-button (click)="sortLikes()" [ngClass]="{'sort__button':!likesSort,'active__sort':likesSort}">LIKES
+    <button mat-button (click)="sortLikes()" [ngClass]="{'sort__button':!likesSort,'active__sort':likesSort}">ЛАЙКИ
     </button>
   </div>
+<div class="allContent">
   <div class="dreams">
     <div class="dream" *ngFor="let dream of dreams">
       <div *ngIf="dream.is_active">
@@ -20,7 +21,7 @@
         <p class="dream__description">{{dream.description}}</p>
         <div class="separator"></div>
         <div class="dream__header">
-          <a class="dream__author" [routerLink]="['/user-profile',dream._id]">{{dream.author_name}}</a>
+          <a class="dream__author" [routerLink]="['/user-profile',dream.author_id]">{{dream.author_name}}</a>
           <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
             <i class="fa fa-heart">❤</i>
             <span>{{dream.number_of_likes}}</span>
@@ -29,78 +30,7 @@
         </div>
       </div>
     </div>
-
-    <!--    <div class="dream">-->
-    <!--      <div class="dream__header">-->
-    <!--        <p class="dream__name">Поїхати в Іспаніш</p>-->
-    <!--        <p class="dream__price">$4000</p>-->
-    <!--      </div>-->
-    <!--      <div class="separator"></div>-->
-    <!--      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на-->
-    <!--        канал</p>-->
-    <!--      <div class="separator"></div>-->
-    <!--      <div class="dream__header">-->
-    <!--        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>-->
-    <!--        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">-->
-    <!--          <i class="fa fa-heart">❤</i>-->
-    <!--          <span>Like</span>-->
-    <!--        </button>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
-    <!--    <div class="dream">-->
-    <!--      <div class="dream__header">-->
-    <!--        <p class="dream__name">Поїхати в Іспаніш</p>-->
-    <!--        <p class="dream__price">$4000</p>-->
-    <!--      </div>-->
-    <!--      <div class="separator"></div>-->
-    <!--      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на-->
-    <!--        канал</p>-->
-    <!--      <div class="separator"></div>-->
-    <!--      <div class="dream__header">-->
-    <!--        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>-->
-    <!--        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">-->
-    <!--          <i class="fa fa-heart">❤</i>-->
-    <!--          <span>Like</span>-->
-    <!--        </button>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
-    <!--    <div class="dream">-->
-    <!--      <div class="dream__header">-->
-    <!--        <p class="dream__name">Поїхати в Іспаніш</p>-->
-    <!--        <p class="dream__price">$4000</p>-->
-    <!--      </div>-->
-    <!--      <div class="separator"></div>-->
-    <!--      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на-->
-    <!--        канал</p>-->
-    <!--      <div class="separator"></div>-->
-    <!--      <div class="dream__header">-->
-    <!--        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>-->
-    <!--        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">-->
-    <!--          <i class="fa fa-heart">❤</i>-->
-    <!--          <span>Like</span>-->
-    <!--        </button>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
-    <!--    <div class="dream">-->
-    <!--      <div class="dream__header">-->
-    <!--        <p class="dream__name">Поїхати в Іспаніш</p>-->
-    <!--        <p class="dream__price">$4000</p>-->
-    <!--      </div>-->
-    <!--      <div class="separator"></div>-->
-    <!--      <p class="dream__description">Ми з друзями пздц хочемо побухать в Катмаддолії, ставте лайки підписуйтесь на-->
-    <!--        канал</p>-->
-    <!--      <div class="separator"></div>-->
-    <!--      <div class="dream__header">-->
-    <!--        <a class="dream__author" [routerLink]="['/user-profile',1]">Команда БГБ</a>-->
-    <!--        <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">-->
-    <!--          <i class="fa fa-heart">❤</i>-->
-    <!--          <span>Like</span>-->
-    <!--        </button>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
   </div>
+  <button class="more" *ngIf="moreTen" mat-button (click)="moreDreams()">ПОКАЗАТИ ЩЕ</button>
+</div>
 </div>

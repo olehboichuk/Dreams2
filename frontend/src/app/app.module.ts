@@ -18,6 +18,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
 import {NgxMatIntlTelInputModule} from "ngx-mat-intl-tel-input";
 import {MatIconModule} from "@angular/material/icon";
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {MatIconModule} from "@angular/material/icon";
     LoginComponent,
     DreamFormComponent,
     MainPageComponent,
-    ToolBarComponent
+    ToolBarComponent,
+    UserProfileComponent
   ],
   imports: [
     ReactiveFormsModule,
