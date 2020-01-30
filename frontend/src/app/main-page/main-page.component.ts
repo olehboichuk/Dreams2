@@ -3,11 +3,21 @@ import {FormBuilder} from "@angular/forms";
 import {MessageService} from "../services/message.service";
 import {Router} from "@angular/router";
 import {Dreams} from "../models/dreams";
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.scss']
+  styleUrls: ['./main-page.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({transform: 'scale(0.5)', opacity: 0}),  // initial
+        animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
+          style({transform: 'scale(1)', opacity: 1}))  // final
+      ]),
+    ]),
+  ],
 })
 export class MainPageComponent implements OnInit {
   private liked = false;
@@ -30,9 +40,9 @@ export class MainPageComponent implements OnInit {
     };
     this.registerService.getAllDreams(sortType).subscribe(data => {
         this.dreams = data.dreams;
-        if(this.dreams.length>=this.listSize){
+        if (this.dreams.length >= this.listSize) {
           this.moreTen = true;
-        }else {
+        } else {
           this.moreTen = false;
         }
       }, error => {
@@ -88,16 +98,16 @@ export class MainPageComponent implements OnInit {
   }
 
   moreDreams() {
-    this.listSize+=10;
+    this.listSize += 10;
     const sortType = {
       sort_type: 'likes',
       list_size: this.listSize,
     };
     this.registerService.getAllDreams(sortType).subscribe(data => {
         this.dreams = data.dreams;
-        if(this.dreams.length>=this.listSize){
+        if (this.dreams.length >= this.listSize) {
           this.moreTen = true;
-        }else {
+        } else {
           this.moreTen = false;
         }
       }, error => {

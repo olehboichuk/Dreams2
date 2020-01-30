@@ -9,28 +9,27 @@
     <button mat-button (click)="sortLikes()" [ngClass]="{'sort__button':!likesSort,'active__sort':likesSort}">ЛАЙКИ
     </button>
   </div>
-<div class="allContent">
-  <div class="dreams">
-    <div class="dream" *ngFor="let dream of dreams">
-      <div *ngIf="dream.is_active">
-        <div class="dream__header">
-          <p class="dream__name">{{dream.title}}</p>
-          <p class="dream__price">₴{{dream.price}}</p>
-        </div>
-        <div class="separator"></div>
-        <p class="dream__description">{{dream.description}}</p>
-        <div class="separator"></div>
-        <div class="dream__header">
-          <a class="dream__author" [routerLink]="['/user-profile',dream.author_id]">{{dream.author_name}}</a>
-          <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
-            <i class="fa fa-heart">❤</i>
-            <span>{{dream.number_of_likes}}</span>
-            <span>Like</span>
-          </button>
+  <div class="allContent">
+    <div class="dreams">
+      <div class="dream" *ngFor="let dream of dreams" >
+        <div *ngIf="dream.is_active">
+          <div class="dream__header">
+            <p class="dream__name">{{dream.title}}</p>
+            <p class="dream__price">₴{{dream.price}}</p>
+          </div>
+          <div class="separator"></div>
+          <p class="dream__description">{{dream.description}}</p>
+          <div class="separator"></div>
+          <div class="dream__header">
+            <a class="dream__author" [routerLink]="['/user-profile',dream.author_id]">{{dream.author_name}}</a>
+            <button (click)="like()" [ngClass]="{'button button-like':true, 'liked':liked}">
+              <i class="fa fa-heart">❤</i>
+              <span>{{dream.number_of_likes}}</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
+    <button class="more" *ngIf="moreTen" mat-button (click)="moreDreams()" @fadeIn>ПОКАЗАТИ ЩЕ</button>
   </div>
-  <button class="more" *ngIf="moreTen" mat-button (click)="moreDreams()">ПОКАЗАТИ ЩЕ</button>
-</div>
 </div>

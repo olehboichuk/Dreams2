@@ -277,6 +277,7 @@ def profile(profid):
     }), 201
     return result
 
+
 def update_my_dream_status(like_list, dream_id):     # like_list - user['liked_dreams']; dream_id - ObjectId !!!
     dreams = mongo.db.dreams
     dream = dreams.find_one({'_id': dream_id})
