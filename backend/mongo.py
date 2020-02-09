@@ -221,8 +221,7 @@ def get_all_dreams_logged():
         return jsonify(message='Wrong sorting code'), 422
 
     dreams_array = set_is_liked(sorted_dreams, likes_array)
-    result = jsonify(dreams=dreams_array), 200
-    return result
+    return jsonify(dreams=dreams_array), 200
 
 
 @app.route(REFS['LIKE'], methods=['POST'])
@@ -294,6 +293,7 @@ def update_my_dream_status(like_list, dream_id):  # like_list - user['liked_drea
     print(dreams.find_one({'_id': dream_id}))
 
 
+# in dream_like, result of this function is returned there
 def update_like_list(user_id, dream_id, action):  # action = 'like' or 'dislike' depending on query
     users = mongo.db.users
     dreams = mongo.db.dreams
@@ -317,7 +317,7 @@ def update_like_list(user_id, dream_id, action):  # action = 'like' or 'dislike'
     elif action == 'unlike':
         if dream_id not in like_list:
             print("This dream has not been liked yet")
-            return jsonify(message='This dream has not been liked'), 422
+            return jsonify(message='This dream has not been liked yet'), 422
         like_list.remove(dream_id)
         update_my_dream_status(like_list, user_dream['_id'])
 
@@ -326,6 +326,7 @@ def update_like_list(user_id, dream_id, action):  # action = 'like' or 'dislike'
     return jsonify(message="Dream is liked"), 200
 
 
+# in update_like_list, affects dreams db only
 def update_like_counter(dream_id, action):  # action = 'like' or 'dislike'
     dreams = mongo.db.dreams
     if action == 'like':
@@ -334,6 +335,7 @@ def update_like_counter(dream_id, action):  # action = 'like' or 'dislike'
         dreams.update({'_id': ObjectId(dream_id)}, {'$inc': {'number_of_likes': -1}})
 
 
+# in get_all_dreams_logged
 def set_is_liked(sorted_dreams, likes_array):
     dreams_array = []
     for dream in sorted_dreams:
@@ -347,6 +349,7 @@ def set_is_liked(sorted_dreams, likes_array):
     return dreams_array
 
 
+# in get_all_dreams_logged
 def sort_by_my_likes(unsorted_dreams):
     liked_arr = []
     unliked_arr = []
