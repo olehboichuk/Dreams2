@@ -86,7 +86,7 @@ def register():
             'token': access_token,
             'expiresIn': token_created + app.config['JWT_ACCESS_TOKEN_EXPIRES']
         }), 201
-    return jsonify(message="Some problems with adding new User"), 409
+    return jsonify(message="Some problems with adding new User"), 422
 
 
 @app.route(REFS['LOGIN'], methods=['POST'])
@@ -197,6 +197,11 @@ def get_all_dreams_logged():
     if not current_user:
         return jsonify(message='This user does not exist'), 422
 
+    try:
+        likes_array = current_user['liked_dreams']
+    except KeyError:
+        likes_array = []
+
     if sort_type == 'likes':
         print('likes')
         sorted_dreams = dreams_db.find({'is_active': 'true'}).sort('number_of_likes', direction=pymongo.DESCENDING)
@@ -205,26 +210,18 @@ def get_all_dreams_logged():
         print('datetime')
         sorted_dreams = dreams_db.find({'is_active': 'true'}).sort('create_time', direction=pymongo.DESCENDING)
         sorted_dreams.limit(list_size)
+    elif sort_type == 'my_likes':
+        print('my_likes')
+        sorted_dreams = dreams_db.find({'is_active': 'true'})
+        unsorted_dreams = set_is_liked((sorted_dreams, likes_array))
+        dreams_array = sort_by_my_likes(unsorted_dreams)
+        return jsonify(dreams=dreams_array[0:list_size]), 200
     else:
         print('else')
         return jsonify(message='Wrong sorting code'), 422
 
-    try:
-        likes_array = current_user['liked_dreams']
-    except KeyError:
-        likes_array = []
-
-    dreams_array = []
-    for dream in sorted_dreams:
-        dream['_id'] = tostring(JSONEncoder().encode(dream['_id']))
-        if dream['_id'] in likes_array:
-            dream['_liked'] = 'true'
-        else:
-            dream['_liked'] = 'false'
-        print(dream['_liked'])
-        dreams_array.append(dream)
-    result = jsonify(dreams=dreams_array), 200
-    return result
+    dreams_array = set_is_liked(sorted_dreams, likes_array)
+    return jsonify(dreams=dreams_array), 200
 
 
 @app.route(REFS['LIKE'], methods=['POST'])
@@ -240,10 +237,13 @@ def dream_like():
     dream = dreams.find_one({'_id': ObjectId(dream_id)})
     print(dream)
 
+    if dream['author_id'] == user_id:
+        return jsonify(message='User may not like his own dream'), 422
     if not dream:
         return jsonify(message='Dream not found'), 404
     if not current_user:
         return jsonify(message='User not found'), 404
+
     if action == 'like':
         response = update_like_list(user_id, dream_id, action='like')
     elif action == 'unlike':
@@ -293,6 +293,7 @@ def update_my_dream_status(like_list, dream_id):  # like_list - user['liked_drea
     print(dreams.find_one({'_id': dream_id}))
 
 
+# in dream_like, result of this function is returned there
 def update_like_list(user_id, dream_id, action):  # action = 'like' or 'dislike' depending on query
     users = mongo.db.users
     dreams = mongo.db.dreams
@@ -316,7 +317,7 @@ def update_like_list(user_id, dream_id, action):  # action = 'like' or 'dislike'
     elif action == 'unlike':
         if dream_id not in like_list:
             print("This dream has not been liked yet")
-            return jsonify(message='This dream has not been liked'), 422
+            return jsonify(message='This dream has not been liked yet'), 422
         like_list.remove(dream_id)
         update_my_dream_status(like_list, user_dream['_id'])
 
@@ -325,12 +326,53 @@ def update_like_list(user_id, dream_id, action):  # action = 'like' or 'dislike'
     return jsonify(message="Dream is liked"), 200
 
 
+# in update_like_list, affects dreams db only
 def update_like_counter(dream_id, action):  # action = 'like' or 'dislike'
     dreams = mongo.db.dreams
     if action == 'like':
         dreams.update({'_id': ObjectId(dream_id)}, {'$inc': {'number_of_likes': 1}})
     elif action == 'unlike':
         dreams.update({'_id': ObjectId(dream_id)}, {'$inc': {'number_of_likes': -1}})
+
+
+# in get_all_dreams_logged
+def set_is_liked(sorted_dreams, likes_array):
+    dreams_array = []
+    for dream in sorted_dreams:
+        dream['_id'] = tostring(JSONEncoder().encode(dream['_id']))
+        if dream['_id'] in likes_array:
+            dream['_liked'] = 'true'
+        else:
+            dream['_liked'] = 'false'
+        print(dream['_liked'])
+        dreams_array.append(dream)
+    return dreams_array
+
+
+# in get_all_dreams_logged
+def sort_by_my_likes(unsorted_dreams):
+    liked_arr = []
+    unliked_arr = []
+    for dream in unsorted_dreams:
+        if dream['_liked'] == 'true':
+            liked_arr.append(dream)
+        else:
+            unliked_arr.append(dream)
+    return liked_arr + unliked_arr
+
+
+# returns pair (x, y) where
+# x = user's dream instance,
+# y = dream's rank among all dreams sorted by likes
+def get_dream_position(author_id):     # as a string
+    dreams = mongo.db.dreams
+    sorted_dreams = dreams.find({'is_active': 'true'}).sort('number_of_likes', direction=pymongo.DESCENDING)
+    i = 1
+    for dream in sorted_dreams:
+        if dream['author_id'] == author_id:
+            return dream, i
+        i += 1
+    return None, 0
 
 
 if __name__ == '__main__':
