@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   public loading = false;
   matcher = new MyErrorStateMatcher();
-  hidePassword= true;
+  hidePassword = true;
 
   constructor(private loginService: MessageService, private router: Router, private formBuilder: FormBuilder) {
   }
@@ -54,7 +54,11 @@ export class LoginComponent implements OnInit {
       .subscribe(data => {
           localStorage.setItem('id_token', data.token);
           localStorage.setItem("expires_at", JSON.stringify(data.expiresIn));
-          this.router.navigate(['/']);
+          localStorage.setItem('dream_created', data.dream_created);
+          if (data.dream_created == 'true')
+            this.router.navigate(['/']);
+          else
+            this.router.navigate(['/dream-register']);
         },
         error => {
           console.warn('LOGIN DOESN`T WORK');

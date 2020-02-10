@@ -22,6 +22,10 @@ import {animate, style, transition, trigger} from "@angular/animations";
 export class MainPageComponent implements OnInit {
   private dreams: Dreams [] = [];
   private listSize = 10;
+  public sortType = {
+    sort_type: 'likes',
+    list_size: this.listSize,
+  };
   dataSort = false;
   yourSort = false;
   likesSort = true;
@@ -32,12 +36,10 @@ export class MainPageComponent implements OnInit {
 
 
   ngOnInit() {
-    const sortType = {
-      sort_type: 'likes',
-      list_size: this.listSize,
-    };
+    if (localStorage.getItem("dream_created") == 'false')
+      this.router.navigate(['/dream-register']);
     if (localStorage.getItem("id_token")) {
-      this.registerService.getAllLoginedDreams(sortType).subscribe(data => {
+      this.registerService.getAllLoginedDreams(this.sortType).subscribe(data => {
           this.dreams = data.dreams;
           if (this.dreams.length >= this.listSize) {
             this.moreTen = true;
@@ -50,7 +52,7 @@ export class MainPageComponent implements OnInit {
         }
       );
     } else {
-      this.registerService.getAllDreams(sortType).subscribe(data => {
+      this.registerService.getAllDreams(this.sortType).subscribe(data => {
           this.dreams = data.dreams;
           if (this.dreams.length >= this.listSize) {
             this.moreTen = true;
@@ -89,11 +91,7 @@ export class MainPageComponent implements OnInit {
 
 
   sortLikes() {
-    const sortType = {
-      sort_type: 'likes',
-      list_size: this.listSize,
-    };
-    this.registerService.getAllDreams(sortType).subscribe(data => {
+    this.registerService.getAllDreams(this.sortType).subscribe(data => {
         this.dreams = data.dreams;
       }, error => {
         console.warn('no ok');
@@ -105,11 +103,11 @@ export class MainPageComponent implements OnInit {
   }
 
   sortData() {
-    const sortType = {
+    this.sortType = {
       sort_type: 'create_time',
       list_size: this.listSize,
     };
-    this.registerService.getAllDreams(sortType).subscribe(data => {
+    this.registerService.getAllDreams(this.sortType).subscribe(data => {
         this.dreams = data.dreams;
       }, error => {
         console.warn('no ok');
@@ -128,11 +126,11 @@ export class MainPageComponent implements OnInit {
 
   moreDreams() {
     this.listSize += 10;
-    const sortType = {
+    this.sortType = {
       sort_type: 'likes',
       list_size: this.listSize,
     };
-    this.registerService.getAllDreams(sortType).subscribe(data => {
+    this.registerService.getAllDreams(this.sortType).subscribe(data => {
         this.dreams = data.dreams;
         if (this.dreams.length >= this.listSize) {
           this.moreTen = true;

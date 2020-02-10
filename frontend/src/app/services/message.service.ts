@@ -38,6 +38,7 @@ export class MessageService {
   logout() {
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
+    localStorage.removeItem("dream_created");
     this._logInUser = false;
     this.router.navigate(['/login']);
   }
@@ -62,6 +63,7 @@ export class MessageService {
     if (!moment(new Date().toUTCString()).isBefore(this.getExpiration()) && localStorage.getItem("id_token")) {
       localStorage.removeItem("id_token");
       localStorage.removeItem("expires_at");
+      localStorage.removeItem("dream_created");
     }
     return moment(new Date().toUTCString()).isBefore(this.getExpiration());
   }
