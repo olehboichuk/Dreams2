@@ -213,7 +213,7 @@ def get_all_dreams_logged():
     elif sort_type == 'my_likes':
         print('my_likes')
         sorted_dreams = dreams_db.find({'is_active': 'true'})
-        unsorted_dreams = set_is_liked((sorted_dreams, likes_array))
+        unsorted_dreams = set_is_liked(sorted_dreams, likes_array)
         dreams_array = sort_by_my_likes(unsorted_dreams)
         return jsonify(dreams=dreams_array[0:list_size]), 200
     else:

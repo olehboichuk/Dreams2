@@ -91,12 +91,11 @@ export class MainPageComponent implements OnInit {
 
 
   sortLikes() {
-    this.registerService.getAllDreams(this.sortType).subscribe(data => {
-        this.dreams = data.dreams;
-      }, error => {
-        console.warn('no ok');
-      }
-    );
+    this.sortType = {
+      sort_type: 'likes',
+      list_size: this.listSize,
+    };
+    this.ngOnInit();
     this.dataSort = false;
     this.likesSort = true;
     this.yourSort = false;
@@ -107,18 +106,18 @@ export class MainPageComponent implements OnInit {
       sort_type: 'create_time',
       list_size: this.listSize,
     };
-    this.registerService.getAllDreams(this.sortType).subscribe(data => {
-        this.dreams = data.dreams;
-      }, error => {
-        console.warn('no ok');
-      }
-    );
+    this.ngOnInit();
     this.dataSort = true;
     this.likesSort = false;
     this.yourSort = false;
   }
 
   sortYour() {
+    this.sortType = {
+      sort_type: 'my_likes',
+      list_size: this.listSize,
+    };
+    this.ngOnInit();
     this.yourSort = true;
     this.likesSort = false;
     this.dataSort = false;
