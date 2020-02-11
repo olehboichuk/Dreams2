@@ -377,15 +377,14 @@ def get_dream_position(author_id):  # as a string
 
 
 @app.route('/reset_password', methods=['POST'])
-@jwt_required
 def send_email_reset_password():
     users = mongo.db.users
     pwreset = mongo.db.pwrest
 
     email = request.get_json()['email']
-    user_id = get_jwt_identity()['_id']
 
     response = users.find_one({'email': email})
+    user_id = response['_id']
 
     if not response:
         return jsonify(message='There is no such E-mail'), 404
@@ -402,11 +401,13 @@ def send_email_reset_password():
         'access_token': access_token
     })
 
-    yag = yagmail.SMTP(user='gamaundavid23@gmail.com', password='236lfdbl315')
+    yag = yagmail.SMTP(user='meetupplus77@gmail.com', password='Qwerty123_')
     contents = ['Please go to this URL to reset your password:',
                 "APP URL HERE: \n" + url_for("pwreset_post", token=(str(access_token)))]
     yag.send(email, 'Reset your password', contents)
+
     new_pwreset = pwreset.find_one({'_id': pwreset_id})
+
     if new_pwreset:
         return jsonify(message='Success check your email for a link to reset your password.'), 201
     else:
@@ -414,7 +415,6 @@ def send_email_reset_password():
 
 
 @app.route("/pwreset/<token>", methods=["POST"])
-@jwt_required
 def pwreset_post(token):
     pwreset = mongo.db.pwrest
     users = mongo.db.users
@@ -426,7 +426,7 @@ def pwreset_post(token):
 
     pwreset.remove({'access_token': token})
 
-    user_id = tostring(current_pwreset['user_id'])
+    user_id = tostring(JSONEncoder().encode(current_pwreset['user_id']))
 
     new_password = bcrypt.generate_password_hash(request.get_json()['new_password']).decode('utf-8')
 
