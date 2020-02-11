@@ -19,6 +19,7 @@ import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
 import {NgxMatIntlTelInputModule} from "ngx-mat-intl-tel-input";
 import {MatIconModule} from "@angular/material/icon";
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     DreamFormComponent,
     MainPageComponent,
     ToolBarComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ResetPasswordComponent
   ],
   imports: [
     ReactiveFormsModule,

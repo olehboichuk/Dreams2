@@ -3,11 +3,12 @@ import {FormBuilder} from "@angular/forms";
 import {MessageService} from "../services/message.service";
 import {Router} from "@angular/router";
 import {Dreams} from "../models/dreams";
-import {animate, style, transition, trigger} from "@angular/animations";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
+  providers: [MessageService],
   styleUrls: ['./main-page.component.scss'],
   animations: [
     trigger('fadeIn', [
@@ -16,7 +17,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
         animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
           style({transform: 'scale(1)', opacity: 1}))  // final
       ]),
-    ]),
+    ])
   ],
 })
 export class MainPageComponent implements OnInit {
@@ -38,37 +39,10 @@ export class MainPageComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem("dream_created") == 'false')
       this.router.navigate(['/dream-register']);
-    if (localStorage.getItem("id_token")) {
-      this.registerService.getAllLoginedDreams(this.sortType).subscribe(data => {
-          this.dreams = data.dreams;
-          if (this.dreams.length >= this.listSize) {
-            this.moreTen = true;
-          } else {
-            this.moreTen = false;
-          }
-          console.warn('loggg');
-        }, error => {
-          console.warn('no ok');
-        }
-      );
-    } else {
-      this.registerService.getAllDreams(this.sortType).subscribe(data => {
-          this.dreams = data.dreams;
-          if (this.dreams.length >= this.listSize) {
-            this.moreTen = true;
-          } else {
-            this.moreTen = false;
-          }
-          console.warn('No loggg');
-        }, error => {
-          console.warn('no ok');
-        }
-      );
-    }
-
+    this.loadDreams();
   }
 
-  like(id: string, isLiked: string) {
+  like(id: string, isLiked: string, index: number) {
     let like = {
       _id: id,
       action: 'like',
@@ -80,8 +54,16 @@ export class MainPageComponent implements OnInit {
       };
     }
     this.registerService.like(like).subscribe(data => {
-        this.ngOnInit();
-        console.warn('pzdts ok ok');
+        if (isLiked == 'true') {
+          console.warn('unlike');
+          this.dreams[index]._liked = 'false';
+          this.dreams[index].number_of_likes--;
+        } else {
+          console.warn('like');
+          this.dreams[index].number_of_likes++;
+          this.dreams[index]._liked = 'true';
+        }
+
       }, error => {
         console.warn('no ok');
       }
@@ -89,13 +71,12 @@ export class MainPageComponent implements OnInit {
 
   }
 
-
   sortLikes() {
     this.sortType = {
       sort_type: 'likes',
       list_size: this.listSize,
     };
-    this.ngOnInit();
+    this.loadDreams();
     this.dataSort = false;
     this.likesSort = true;
     this.yourSort = false;
@@ -106,7 +87,7 @@ export class MainPageComponent implements OnInit {
       sort_type: 'create_time',
       list_size: this.listSize,
     };
-    this.ngOnInit();
+    this.loadDreams();
     this.dataSort = true;
     this.likesSort = false;
     this.yourSort = false;
@@ -117,7 +98,7 @@ export class MainPageComponent implements OnInit {
       sort_type: 'my_likes',
       list_size: this.listSize,
     };
-    this.ngOnInit();
+    this.loadDreams();
     this.yourSort = true;
     this.likesSort = false;
     this.dataSort = false;
@@ -140,5 +121,35 @@ export class MainPageComponent implements OnInit {
         console.warn('no ok');
       }
     );
+  }
+
+  private loadDreams() {
+    if (localStorage.getItem("id_token")) {
+      this.registerService.getAllLoginedDreams(this.sortType).subscribe(data => {
+          this.dreams = data.dreams;
+          if (this.dreams.length >= this.listSize) {
+            this.moreTen = true;
+          } else {
+            this.moreTen = false;
+          }
+          console.warn('Dreams to login user');
+        }, error => {
+          console.warn('Dreams login ERROR');
+        }
+      );
+    } else {
+      this.registerService.getAllDreams(this.sortType).subscribe(data => {
+          this.dreams = data.dreams;
+          if (this.dreams.length >= this.listSize) {
+            this.moreTen = true;
+          } else {
+            this.moreTen = false;
+          }
+          console.warn('Dreams to NO login user');
+        }, error => {
+          console.warn('Dreams NO login ERROR');
+        }
+      );
+    }
   }
 }
