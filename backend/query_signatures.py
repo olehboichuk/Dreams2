@@ -106,3 +106,40 @@ dream_like_response = {
     },
     200: {"message": "Dream is liked"}
 }
+
+send_email_reset_password = {
+    "email": "email",
+
+    404: {
+        "message":{
+        "There is no such email"
+        }
+    },
+    405: {
+        "message":{
+        "Something go wrong"
+        }
+    },
+
+    201: {
+        "message":{
+            "Success check your email for a link to reset your password."
+        }
+    }
+
+}
+
+pwreset_post = {
+    "new_password":"new_password",
+    
+    422 : {
+        "message":{
+            "Link for password reset is not avaliable anymore"
+        }
+    },
+    200:{
+        "user_id":{
+            "user_id"
+        }
+    }
+}
