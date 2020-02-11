@@ -87,33 +87,3 @@ main {
     line-height: inherit;
   }
 }
-
-.verify_router {
-  font-family: $font_family_1;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 29px;
-  text-align: center;
-  letter-spacing: 0.4px;
-  color: $color_2;
-  margin-top: 510px;
-}
-
-@include for-tablet-landscape-up {
-  .verify_router {
-    margin-top: 420px;
-  }
-}
-
-@include for-phone-only {
-  .verify_router {
-    font-size: 16px;
-  }
-}
-
-@include for-mini-phone {
-  .verify_router {
-    line-height: inherit;
-  }
-}
