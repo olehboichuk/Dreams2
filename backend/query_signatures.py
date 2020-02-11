@@ -131,7 +131,7 @@ send_email_reset_password = {
 
 pwreset_post = {
     "new_password":"new_password",
-    
+
     422 : {
         "message":{
             "Link for password reset is not avaliable anymore"
