@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, request, json
+from flask import Flask, jsonify, request, json, url_for
 from flask_pymongo import PyMongo
 import pymongo
+import yagmail
 from bson.objectid import ObjectId
 from datetime import datetime, timedelta
 from flask_cors import CORS
@@ -373,6 +374,73 @@ def get_dream_position(author_id):     # as a string
             return dream, i
         i += 1
     return None, 0
+
+
+@app.route('/reset_password', methods=['POST'])
+@jwt_required
+def send_email_reset_password():
+    users = mongo.db.users
+    pwreset = mongo.db.pwrest
+
+    email = request.get_json()['email']
+    user_id = get_jwt_identity()['_id']
+
+    response = users.find_one({'email': email})
+
+    if not response:
+        return jsonify(message='There is no such E-mail'), 404
+
+    token_created = datetime.utcnow()
+    access_token = create_access_token(identity={
+        'email': email,
+        'token_created': token_created,
+    })
+
+    pwreset_id = pwreset.insert({
+        'email': email,
+        'user_id': user_id,
+        'access_token': access_token
+    })
+
+    yag = yagmail.SMTP(user='gamaundavid23@gmail.com',password='236lfdbl315')
+    contents = ['Please go to this URL to reset your password:', "APP URL HERE: \n" + url_for("pwreset_post", token=(str(access_token)))]
+    yag.send(email, 'Reset your password', contents)
+
+
+
+    new_pwreset = pwreset.find_one({'_id': pwreset_id})
+    if new_pwreset:
+        return jsonify(message='Success check your email for a link to reset your password.'),201
+    else:
+        return jsonify(message='Something go wrong'), 405
+
+
+@app.route("/pwreset/<token>", methods=["POST"])
+@jwt_required
+def pwreset_post(token):
+
+    pwreset = mongo.db.pwrest
+    users = mongo.db.users
+
+    current_pwreset = pwreset.find_one({'access_token':token})
+    print(current_pwreset)
+    if not current_pwreset:
+        return jsonify(message='Link for password reset is not avaliable anymore'),420
+
+    pwreset.remove({'access_token':token})
+
+    user_id = tostring(current_pwreset['user_id'])
+
+    new_password = bcrypt.generate_password_hash(request.get_json()['new_password']).decode('utf-8')
+
+    users.update({'_id': ObjectId(user_id)}, {'$set': {'password': new_password}})
+
+    return jsonify({"user_id": user_id}) , 200
+
+
+
+
+
 
 
 if __name__ == '__main__':
