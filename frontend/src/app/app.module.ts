@@ -20,6 +20,8 @@ import {NgxMatIntlTelInputModule} from "ngx-mat-intl-tel-input";
 import {MatIconModule} from "@angular/material/icon";
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SendMailComponent } from './send-mail/send-mail.component';
+import { VerificationComponent } from './verification/verification.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MainPageComponent,
     ToolBarComponent,
     UserProfileComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    SendMailComponent,
+    VerificationComponent
   ],
   imports: [
     ReactiveFormsModule,

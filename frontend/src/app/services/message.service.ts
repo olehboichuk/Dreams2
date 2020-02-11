@@ -21,6 +21,9 @@ export class MessageService {
   private logoutURL = 'http://localhost:5000/logout';
   private profileURL = 'http://localhost:5000/profile/';
   private likeURL = 'http://localhost:5000/users/user/like';
+  private resetPassURL = 'http://localhost:5000/pwreset/';
+  private sendMAilURL = 'http://localhost:5000/reset_password';
+
 
   public _logInUser = false;
 
@@ -84,4 +87,11 @@ export class MessageService {
     return this.http.post(this.likeURL, like);
   }
 
+  resetPassword(data: { password: string, token: string }) {
+    return this.http.post(this.resetPassURL + data.token, data.password);
+  }
+
+  sendMail(mail: string) {
+    return this.http.post(this.sendMAilURL, mail);
+  }
 }

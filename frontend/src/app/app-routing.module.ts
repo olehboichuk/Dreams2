@@ -5,6 +5,9 @@ import {DreamFormComponent} from "./dream-form/dream-form.component";
 import {LoginComponent} from "./login/login.component";
 import {MainPageComponent} from "./main-page/main-page.component";
 import {UserProfileComponent} from "./user-profile/user-profile.component";
+import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import {SendMailComponent} from "./send-mail/send-mail.component";
+import {VerificationComponent} from "./verification/verification.component";
 
 
 const routes: Routes = [
@@ -13,6 +16,9 @@ const routes: Routes = [
   {path: 'register', component: SignUpComponent},
   {path: 'dream-register', component: DreamFormComponent},
   {path: 'user-profile/:userId', component: UserProfileComponent},
+  {path: 'pwreset/:resetToken', component: ResetPasswordComponent},
+  {path: 'forgot-password', component: SendMailComponent},
+  {path: 'verification', component: VerificationComponent},
 ];
 
 

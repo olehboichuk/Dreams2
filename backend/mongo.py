@@ -365,7 +365,7 @@ def sort_by_my_likes(unsorted_dreams):
 # returns pair (x, y) where
 # x = user's dream instance,
 # y = dream's rank among all dreams sorted by likes
-def get_dream_position(author_id):     # as a string
+def get_dream_position(author_id):  # as a string
     dreams = mongo.db.dreams
     sorted_dreams = dreams.find({'is_active': 'true'}).sort('number_of_likes', direction=pymongo.DESCENDING)
     i = 1
@@ -402,15 +402,13 @@ def send_email_reset_password():
         'access_token': access_token
     })
 
-    yag = yagmail.SMTP(user='gamaundavid23@gmail.com',password='236lfdbl315')
-    contents = ['Please go to this URL to reset your password:', "APP URL HERE: \n" + url_for("pwreset_post", token=(str(access_token)))]
+    yag = yagmail.SMTP(user='gamaundavid23@gmail.com', password='236lfdbl315')
+    contents = ['Please go to this URL to reset your password:',
+                "APP URL HERE: \n" + url_for("pwreset_post", token=(str(access_token)))]
     yag.send(email, 'Reset your password', contents)
-
-
-
     new_pwreset = pwreset.find_one({'_id': pwreset_id})
     if new_pwreset:
-        return jsonify(message='Success check your email for a link to reset your password.'),201
+        return jsonify(message='Success check your email for a link to reset your password.'), 201
     else:
         return jsonify(message='Something go wrong'), 405
 
@@ -418,16 +416,15 @@ def send_email_reset_password():
 @app.route("/pwreset/<token>", methods=["POST"])
 @jwt_required
 def pwreset_post(token):
-
     pwreset = mongo.db.pwrest
     users = mongo.db.users
 
-    current_pwreset = pwreset.find_one({'access_token':token})
+    current_pwreset = pwreset.find_one({'access_token': token})
     print(current_pwreset)
     if not current_pwreset:
-        return jsonify(message='Link for password reset is not avaliable anymore'),420
+        return jsonify(message='Link for password reset is not avaliable anymore'), 420
 
-    pwreset.remove({'access_token':token})
+    pwreset.remove({'access_token': token})
 
     user_id = tostring(current_pwreset['user_id'])
 
@@ -435,12 +432,7 @@ def pwreset_post(token):
 
     users.update({'_id': ObjectId(user_id)}, {'$set': {'password': new_password}})
 
-    return jsonify({"user_id": user_id}) , 200
-
-
-
-
-
+    return jsonify({"user_id": user_id}), 200
 
 
 if __name__ == '__main__':

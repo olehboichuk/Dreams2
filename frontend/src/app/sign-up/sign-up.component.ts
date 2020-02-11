@@ -24,7 +24,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 
 export class SignUpComponent implements OnInit {
-  @ViewChild('passwordComponentWithConfirmation', {static: true})
   registerForm: FormGroup;
   public loading = false;
   public password: string;
@@ -88,7 +87,6 @@ export class SignUpComponent implements OnInit {
         });
   }
 }
-
 
 export function MustMatch(controlName: string, matchingControlName: string) {
   return (formGroup: FormGroup) => {
