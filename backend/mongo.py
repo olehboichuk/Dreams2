@@ -376,7 +376,7 @@ def get_dream_position(author_id):  # as a string
     return None, 0
 
 
-@app.route('/reset_password', methods=['POST'])
+@app.route('/send_email', methods=['POST'])
 def send_email_reset_password():
     users = mongo.db.users
     pwreset = mongo.db.pwrest
@@ -384,11 +384,10 @@ def send_email_reset_password():
     email = request.get_json()['email']
 
     response = users.find_one({'email': email})
-    user_id = response['_id']
-
     if not response:
         return jsonify(message='There is no such E-mail'), 404
 
+    user_id = response['_id']
     token_created = datetime.utcnow()
     access_token = create_access_token(identity={
         'email': email,
@@ -414,7 +413,7 @@ def send_email_reset_password():
         return jsonify(message='Something go wrong'), 405
 
 
-@app.route("/pwreset/<token>", methods=["POST"])
+@app.route("/reset-password/<token>", methods=["POST"])
 def pwreset_post(token):
     pwreset = mongo.db.pwrest
     users = mongo.db.users

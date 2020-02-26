@@ -22,6 +22,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SendMailComponent } from './send-mail/send-mail.component';
 import { VerificationComponent } from './verification/verification.component';
+import { TestComponent } from './test/test.component';
+import { MnFullpageModule } from "ngx-fullpage";
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { VerificationComponent } from './verification/verification.component';
     UserProfileComponent,
     ResetPasswordComponent,
     SendMailComponent,
-    VerificationComponent
+    VerificationComponent,
+    TestComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -48,7 +51,8 @@ import { VerificationComponent } from './verification/verification.component';
     MatButtonModule,
     NgxIntlTelInputModule,
     NgxMatIntlTelInputModule,
-    MatIconModule
+    MatIconModule,
+    MnFullpageModule.forRoot()
   ],
   providers: [
     {

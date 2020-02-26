@@ -41,7 +41,10 @@ export class SendMailComponent implements OnInit {
     this.mail = this.sendForm.get('email').value;
     this.loading = true;
     this.sendForm.controls['email'].disable();
-    this.registerService.sendMail(this.mail)
+    let sendData = {
+          email: this.mail
+        };
+    this.registerService.sendMail(sendData)
       .subscribe(data => {
           console.log('mail send success');
           this.router.navigate(['/verification']);

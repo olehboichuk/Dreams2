@@ -8,6 +8,7 @@ import {UserProfileComponent} from "./user-profile/user-profile.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 import {SendMailComponent} from "./send-mail/send-mail.component";
 import {VerificationComponent} from "./verification/verification.component";
+import {TestComponent} from "./test/test.component";
 
 
 const routes: Routes = [
@@ -16,9 +17,10 @@ const routes: Routes = [
   {path: 'register', component: SignUpComponent},
   {path: 'dream-register', component: DreamFormComponent},
   {path: 'user-profile/:userId', component: UserProfileComponent},
-  {path: 'pwreset/:resetToken', component: ResetPasswordComponent},
+  {path: 'reset-password/:resetToken', component: ResetPasswordComponent},
   {path: 'forgot-password', component: SendMailComponent},
   {path: 'verification', component: VerificationComponent},
+  {path: 'hello', component: TestComponent},
 ];
 
 

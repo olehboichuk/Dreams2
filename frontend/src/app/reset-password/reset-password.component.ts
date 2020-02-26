@@ -42,9 +42,9 @@ export class ResetPasswordComponent implements OnInit {
       if (paramMap.has('resetToken')) {
         this.resetToken = paramMap.get('resetToken');
         let sendData = {
-          password: this.password,
+          new_password: this.password,
           token: this.resetToken
-        }
+        };
         this.registerService.resetPassword(sendData)
           .subscribe(data => {
               console.log('success reset');
