@@ -23,7 +23,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SendMailComponent } from './send-mail/send-mail.component';
 import { VerificationComponent } from './verification/verification.component';
 import { TestComponent } from './test/test.component';
-import { MnFullpageModule } from "ngx-fullpage";
+
 
 @NgModule({
   declarations: [
@@ -51,8 +51,7 @@ import { MnFullpageModule } from "ngx-fullpage";
     MatButtonModule,
     NgxIntlTelInputModule,
     NgxMatIntlTelInputModule,
-    MatIconModule,
-    MnFullpageModule.forRoot()
+    MatIconModule
   ],
   providers: [
     {

@@ -1,6 +1,8 @@
-<mat-toolbar class="bar">
+<mat-toolbar [ngClass]="{'bar':_authService.hello,'bar__blue':!_authService.hello}">
   <span class="filler"></span>
-  <button *ngIf="!_authService.isLoggedIn()" mat-button style="outline: none;" routerLink="/login">Вхід</button>
-  <button *ngIf="!_authService.isLoggedIn()" mat-button style="outline: none;" routerLink="/register" >Реєстрація</button>
-  <button *ngIf="_authService.isLoggedIn()" (click)="_authService.logout()" mat-button routerLink="/">Вийти</button>
+  <button *ngIf="!_authService.isLoggedIn()" [ngClass]="{'bar__item':_authService.hello,'bar__item__blue':!_authService.hello}" (click)="_authService.colorHeader(false)" mat-button routerLink="/hello">ДІМ</button>
+  <button *ngIf="!_authService.isLoggedIn()" [ngClass]="{'bar__item':_authService.hello,'bar__item__blue':!_authService.hello}"  (click)="_authService.colorHeader(true)" mat-button routerLink="/">УСІ МРІЇ</button>
+  <button *ngIf="!_authService.isLoggedIn()" [ngClass]="{'bar__item':_authService.hello,'bar__item__blue':!_authService.hello}" (click)="_authService.colorHeader(true)" mat-button routerLink="/login">УВІЙТИ</button>
+  <button *ngIf="!_authService.isLoggedIn()" [ngClass]="{'bar__item':_authService.hello,'bar__item__blue':!_authService.hello}" (click)="_authService.colorHeader(true)" mat-button routerLink="/register" >РЕЄСТРАЦІЯ</button>
+  <button *ngIf="_authService.isLoggedIn()" [ngClass]="{'bar__item':_authService.hello,'bar__item__blue':!_authService.hello}" (click)="_authService.logout()" mat-button routerLink="/">ВИЙТИ</button>
 </mat-toolbar>

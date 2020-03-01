@@ -1,5 +1,5 @@
 $header_font: "Roboto", serif;
-$header_text_color: #152812;
+$header_text_color: #74B9FF;
 $no_active_color: #CACACA;
 $a_text_color: #131ee2;
 $active_border: #222428;
@@ -18,11 +18,11 @@ $form_color: #FFFFFF;
 .info__headline {
   font-family: $header_font;
   font-style: normal;
-  font-weight: 300;
-  font-size: 40px;
-  line-height: 56px;
-  letter-spacing: 0.105em;
-  text-transform: uppercase;
+  font-weight: normal;
+  font-size: 52px;
+  line-height: 167.69%;
+  text-align: center;
+  letter-spacing: 0.06em;
   color: $header_text_color;
 }
 

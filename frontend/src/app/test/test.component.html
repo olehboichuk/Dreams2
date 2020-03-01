@@ -1,18 +1,40 @@
-<div mnFullpage
-     [mnFullpageNavigation]="true"
-     [mnFullpageKeyboardScrolling]="true">
-
-    <div id="section1" class="section fp-section fp-table">
-        <div class="fp-tableCell">
-            Section 1
+<main>
+  <div (wheel)="Scroll($event)" class="content">
+    <section [ngClass]="{'text':true,'show':one}">
+      <div class="section__intro">
+        <div class="up__content">
+          <div class="img__cont">
+            <img class="img" src="../../assets/images/xmara.png">
+          </div>
+          <div class="main__text">
+            <p class="header">M R I Y</p>
+            <div class="separator"></div>
+            <p class="under__header">місце, де збуваються бажанння.</p>
+          </div>
         </div>
-    </div>
-    <div id="section2" class="section fp-section fp-table">
-        <div class="fp-tableCell">
-            <div class="slide">Slide 1</div>
-            <div class="slide">Slide 2</div>
-            <div class="slide">Slide 3</div>
-            <div class="slide">Slide 4</div>
+        <div class="section__cont">
+          <p class="text__secondary"><b>Здійснювати мрії</b> - ось мета нашого проекту. Дитячі та дорослі, великі та не дуже, ті, що ти носиш в
+            собі ціле життя, чи ті, що лише вчора придумав - усі вони мають шанс стати реальністю!</p>
         </div>
-    </div>
-</div>
+      </div>
+    </section>
+    <section [ngClass]="{'text':true,'show':two}">
+      <div>
+        <h3>Temporibus nesciunt</h3>
+        <p>Rem quos aliquid tempora dolor temporibus nesciunt</p>
+      </div>
+    </section>
+    <section [ngClass]="{'text':true,'show':tree}">
+      <div>
+        <h3>Rem quos aliquid</h3>
+        <p>Rem quos aliquid tempora dolor temporibus nesciunt</p>
+      </div>
+    </section>
+    <section [ngClass]="{'text':true,'show':four}">
+      <div>
+        <h3>Quam hic dicta</h3>
+        <p>Rem quos aliquid tempora dolor temporibus nesciunt</p>
+      </div>
+    </section>
+  </div>
+</main>

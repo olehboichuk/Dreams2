@@ -23,11 +23,15 @@ export class MessageService {
   private likeURL = 'http://localhost:5000/users/user/like';
   private resetPassURL = 'http://localhost:5000/reset-password/';
   private sendMAilURL = 'http://localhost:5000/send_email';
-
+  hello = true;
 
   public _logInUser = false;
 
   constructor(private http: HttpClient, private router: Router) {
+  }
+
+  colorHeader(boll: boolean) {
+    this.hello = boll;
   }
 
   profile(id: string) {
@@ -39,6 +43,7 @@ export class MessageService {
   }
 
   logout() {
+    this.colorHeader(true);
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
     localStorage.removeItem("dream_created");
@@ -91,7 +96,7 @@ export class MessageService {
     return this.http.post(this.resetPassURL + data.token, data);
   }
 
-  sendMail(mail: {email: string}) {
+  sendMail(mail: { email: string }) {
     return this.http.post(this.sendMAilURL, mail);
   }
 }

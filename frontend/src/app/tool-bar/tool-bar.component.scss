@@ -1,6 +1,43 @@
+$header_font: "Roboto", serif;
+$header_text_color: #74B9FF;
+
 .filler {
   flex: 1 1 auto;
 }
+
+.bar__blue {
+  height: 8vh;
+  background-color: #74B9FF;
+}
+
 .bar{
+  height: 8vh;
   background-color: white;
+}
+
+.bar__item__blue {
+  outline: none;
+  font-family: $header_font;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 218.19%;
+  /* or 65px */
+
+  letter-spacing: 0.29em;
+
+  color: white;
+}
+.bar__item {
+  outline: none;
+  font-family: $header_font;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 218.19%;
+  /* or 65px */
+
+  letter-spacing: 0.29em;
+
+  color: $header_text_color;
 }
