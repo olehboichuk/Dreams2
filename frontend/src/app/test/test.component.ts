@@ -24,27 +24,21 @@ export class TestComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.authService.colorHeader(false);
-    window.addEventListener('scroll', this.scroll, true); //third parameter
   }
 
   ngOnDestroy() {
-    window.removeEventListener('scroll', this.scroll, true);
   }
 
-  scroll = (event): void => {
-    //handle your scroll here
-    //notice the 'odd' function assignment to a class field
-    //this is used to be able to remove the event listener
-  };
 
   toggleText(index, state) {
+    this.index = index;
     if (state === 'show') {
-      if (index == 0)
+      if (index == 0){
         this.one = true;
-      if (index == 1) {
-        this.two = true;
         this.authService.colorHeader(false);
       }
+      if (index == 1)
+        this.two = true;
       if (index == 2) {
         this.tree = true;
         this.authService.colorHeader(true);

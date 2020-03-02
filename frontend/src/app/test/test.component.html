@@ -36,6 +36,14 @@
           <button class="btn__go" mat-button routerLink="/register">ПОДІЛИТИСЯ МРІЄЮ</button>
         </div>
         <div class="arrow" (click)="Next()"></div>
+        <div class="arrows" (click)="toggleText(0, 'show')">
+          <a class="arrow-up">
+            <span class="left-arm"></span>
+            <span class="right-arm"></span>
+            <span class="arrow-slide"></span>
+          </a>
+        </div>
+
       </div>
     </section>
     <section [ngClass]="{'text':true,'show':tree}">
@@ -44,22 +52,38 @@
         <div class="content__third">
           <div class="content__item">
             <img class="third__img" src="../../assets/images/userIcon.png" alt="User Icon">
-            <div class="third__text">Розкажи про себе та своє бажання (можеш вигадати собі ім'я чи псевдонім, проте краще уникати нецензурної лексики - не всім таке до вподоби).</div>
+            <div class="third__text">Розкажи про себе та своє бажання (можеш вигадати собі ім'я чи псевдонім, проте
+              краще уникати нецензурної лексики - не всім таке до вподоби).
+            </div>
           </div>
           <div class="content__item">
             <img class="third__img" src="../../assets/images/likeIcon.png" alt="Like Icon">
-            <div class="third__text">Оціни бажання інших. Обери ті, що, на твою думку, заслуговують на здійснення вже зараз, і найкращі (чи найкраще) отримають все, що потрібно для втілення, вже наприкінці місяця.</div>
+            <div class="third__text">Оціни бажання інших. Обери ті, що, на твою думку, заслуговують на здійснення вже
+              зараз, і найкращі (чи найкраще) отримають все, що потрібно для втілення, вже наприкінці місяця.
+            </div>
           </div>
           <div class="content__item">
             <img class="third__img" src="../../assets/images/moneyIcon.png" alt="Money Icon">
-            <div class="third__text">Сплати одноразовий внесок. Бажання не виконуються просто так, навіть Аладін мусив терти бідну лампу. Твій внесок піде у загальний фонд, коштами якого ми допомагатимемо здійснюватити найкращі бажання щомісяця.</div>
+            <div class="third__text">Сплати одноразовий внесок. Бажання не виконуються просто так, навіть Аладін мусив
+              терти бідну лампу. Твій внесок піде у загальний фонд, коштами якого ми допомагатимемо здійснюватити
+              найкращі бажання щомісяця.
+            </div>
           </div>
           <div class="content__item">
             <img class="third__img" src="../../assets/images/starIcon.png" alt="Star Icon">
-            <div class="third__text">Наприкінці місяця найкраще (згідно з вашими оцінками) бажання отримає необхідні кошти та нашу допомогу, аби здійснити цю мрію та зробити ще одну людину щасливою!</div>
+            <div class="third__text">Наприкінці місяця найкраще (згідно з вашими оцінками) бажання отримає необхідні
+              кошти та нашу допомогу, аби здійснити цю мрію та зробити ще одну людину щасливою!
+            </div>
           </div>
         </div>
         <div class="arrow__blue" (click)="Next()"></div>
+        <div class="arrows" (click)="toggleText(0, 'show')">
+          <a class="arrow-up">
+            <span class="left-arm__blue"></span>
+            <span class="right-arm__blue"></span>
+            <span class="arrow-slide__blue"></span>
+          </a>
+        </div>
       </div>
     </section>
     <section [ngClass]="{'text':true,'show':four}">
@@ -73,12 +97,19 @@
           </div>
           <div class="four__content__item">
             <img class="four__img" src="../../assets/images/moneyBagIcon.png" alt="Money bag">
-            <p class="blue__header"style="font-weight: bolder">1488</p>
+            <p class="blue__header" style="font-weight: bolder">1488</p>
             <div class="four__text">гривень зібрано на реалізацію мрій</div>
           </div>
         </div>
         <div>
           <button class="btn__go" mat-button routerLink="/register">ПОДІЛИТИСЯ МРІЄЮ</button>
+        </div>
+        <div class="arrows__last" (click)="toggleText(0, 'show')">
+          <a class="arrow-up">
+            <span class="left-arm"></span>
+            <span class="right-arm"></span>
+            <span class="arrow-slide"></span>
+          </a>
         </div>
       </div>
     </section>
