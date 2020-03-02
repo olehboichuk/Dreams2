@@ -38,10 +38,9 @@ main {
   margin-top: 420px;
 }
 
-@include for-tablet-landscape-up {
+@include for-mini-phone {
   .verify_headline {
-    margin-top: 340px;
-    font-size: 45px;
+    line-height: inherit;
   }
 }
 
@@ -51,11 +50,13 @@ main {
   }
 }
 
-@include for-mini-phone {
+@include for-tablet-landscape-up {
   .verify_headline {
-    line-height: inherit;
+    margin-top: 340px;
+    font-size: 45px;
   }
 }
+
 
 .verify_help {
   font-family: $font_family_1;
@@ -70,9 +71,9 @@ main {
   outline: none;
 }
 
-@include for-tablet-landscape-up {
+@include for-mini-phone {
   .verify_help {
-    margin-top: 380px;
+    line-height: inherit;
   }
 }
 
@@ -82,8 +83,8 @@ main {
   }
 }
 
-@include for-mini-phone {
+@include for-tablet-landscape-up {
   .verify_help {
-    line-height: inherit;
+    margin-top: 380px;
   }
 }

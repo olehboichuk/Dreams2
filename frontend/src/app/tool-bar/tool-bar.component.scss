@@ -7,11 +7,15 @@ $header_text_color: #74B9FF;
 
 .bar__blue {
   height: 8vh;
+  //transform: translateY(0);
+  transition: all 0.4s 0.4s;
   background-color: #74B9FF;
 }
 
 .bar{
   height: 8vh;
+  //transform: translateY(100px);
+  transition: all 0.4s 0.4s;
   background-color: white;
 }
 

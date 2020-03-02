@@ -4,7 +4,7 @@
       <div class="section__intro">
         <div class="up__content">
           <div class="img__cont">
-            <img class="img" src="../../assets/images/xmara.png">
+            <img class="img" src="../../assets/images/xmara.png" alt="Xmara">
           </div>
           <div class="main__text">
             <p class="header">M R I Y</p>
@@ -13,27 +13,73 @@
           </div>
         </div>
         <div class="section__cont">
-          <p class="text__secondary"><b>Здійснювати мрії</b> - ось мета нашого проекту. Дитячі та дорослі, великі та не дуже, ті, що ти носиш в
+          <p class="text__secondary"><b style="font-weight: bolder">Здійснювати мрії</b> - ось мета нашого проекту.
+            Дитячі та дорослі, великі та не
+            дуже, ті, що ти носиш в
             собі ціле життя, чи ті, що лише вчора придумав - усі вони мають шанс стати реальністю!</p>
         </div>
+        <div class="arrow" (click)="Next()"></div>
       </div>
     </section>
     <section [ngClass]="{'text':true,'show':two}">
-      <div>
-        <h3>Temporibus nesciunt</h3>
-        <p>Rem quos aliquid tempora dolor temporibus nesciunt</p>
+      <div class="section__intro">
+        <div class="second_up__content">
+          <div class="second_img__cont">
+            <img class="second_img" src="../../assets/images/parashut.png" alt="Man in sky">
+          </div>
+          <div class="second_text">
+            <p>Оціни чужі бажання та розкажи всім про своє - і хтозна, може саме твоє здійсниться наступним. Ти завджи
+              можеш переглянути бажання інших та допомогти їм здійснити свої мрії.</p>
+          </div>
+        </div>
+        <div>
+          <button class="btn__go" mat-button routerLink="/register">ПОДІЛИТИСЯ МРІЄЮ</button>
+        </div>
+        <div class="arrow" (click)="Next()"></div>
       </div>
     </section>
     <section [ngClass]="{'text':true,'show':tree}">
-      <div>
-        <h3>Rem quos aliquid</h3>
-        <p>Rem quos aliquid tempora dolor temporibus nesciunt</p>
+      <div class="section__intro">
+        <p class="white__header">ЯК ЦЕ ПРАЦЮЄ ?</p>
+        <div class="content__third">
+          <div class="content__item">
+            <img class="third__img" src="../../assets/images/userIcon.png" alt="User Icon">
+            <div class="third__text">Розкажи про себе та своє бажання (можеш вигадати собі ім'я чи псевдонім, проте краще уникати нецензурної лексики - не всім таке до вподоби).</div>
+          </div>
+          <div class="content__item">
+            <img class="third__img" src="../../assets/images/likeIcon.png" alt="Like Icon">
+            <div class="third__text">Оціни бажання інших. Обери ті, що, на твою думку, заслуговують на здійснення вже зараз, і найкращі (чи найкраще) отримають все, що потрібно для втілення, вже наприкінці місяця.</div>
+          </div>
+          <div class="content__item">
+            <img class="third__img" src="../../assets/images/moneyIcon.png" alt="Money Icon">
+            <div class="third__text">Сплати одноразовий внесок. Бажання не виконуються просто так, навіть Аладін мусив терти бідну лампу. Твій внесок піде у загальний фонд, коштами якого ми допомагатимемо здійснюватити найкращі бажання щомісяця.</div>
+          </div>
+          <div class="content__item">
+            <img class="third__img" src="../../assets/images/starIcon.png" alt="Star Icon">
+            <div class="third__text">Наприкінці місяця найкраще (згідно з вашими оцінками) бажання отримає необхідні кошти та нашу допомогу, аби здійснити цю мрію та зробити ще одну людину щасливою!</div>
+          </div>
+        </div>
+        <div class="arrow__blue" (click)="Next()"></div>
       </div>
     </section>
     <section [ngClass]="{'text':true,'show':four}">
-      <div>
-        <h3>Quam hic dicta</h3>
-        <p>Rem quos aliquid tempora dolor temporibus nesciunt</p>
+      <div class="section__intro">
+        <p class="blue__header">СТАТИСТИКА</p>
+        <div class="content__third">
+          <div class="four__content__item">
+            <img class="four__img" src="../../assets/images/usersIcon.png" alt="Group of people">
+            <p class="blue__header" style="font-weight: bolder">228</p>
+            <div class="four__text">користувачів поділилися своєю мрією</div>
+          </div>
+          <div class="four__content__item">
+            <img class="four__img" src="../../assets/images/moneyBagIcon.png" alt="Money bag">
+            <p class="blue__header"style="font-weight: bolder">1488</p>
+            <div class="four__text">гривень зібрано на реалізацію мрій</div>
+          </div>
+        </div>
+        <div>
+          <button class="btn__go" mat-button routerLink="/register">ПОДІЛИТИСЯ МРІЄЮ</button>
+        </div>
       </div>
     </section>
   </div>

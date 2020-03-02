@@ -37,6 +37,7 @@ export class SignUpComponent implements OnInit {
 
 
   ngOnInit() {
+    this.registerService.colorHeader(true);
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],

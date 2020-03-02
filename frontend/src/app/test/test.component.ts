@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MessageService} from "../services/message.service";
+import {delay} from "rxjs/operators";
 
 @Component({
   selector: 'app-test',
@@ -9,7 +10,7 @@ import {MessageService} from "../services/message.service";
 export class TestComponent implements OnInit, OnDestroy {
 
   private idlePeriod = 100;
-  private animationDuration = 100;
+  private animationDuration = 1000;
   private lastAnimation = 0;
   private index = 0;
   one = true;
@@ -20,9 +21,21 @@ export class TestComponent implements OnInit, OnDestroy {
   constructor(private authService: MessageService) {
   }
 
+
   ngOnInit() {
     this.authService.colorHeader(false);
+    window.addEventListener('scroll', this.scroll, true); //third parameter
   }
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.scroll, true);
+  }
+
+  scroll = (event): void => {
+    //handle your scroll here
+    //notice the 'odd' function assignment to a class field
+    //this is used to be able to remove the event listener
+  };
 
   toggleText(index, state) {
     if (state === 'show') {
@@ -51,10 +64,6 @@ export class TestComponent implements OnInit, OnDestroy {
       if (index == 3)
         this.four = false;
     }
-  }
-
-  ngOnDestroy() {
-    console.log('destroying...');
   }
 
   Scroll($event: WheelEvent) {

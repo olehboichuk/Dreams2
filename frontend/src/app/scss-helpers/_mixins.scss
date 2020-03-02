@@ -1,15 +1,54 @@
 @mixin for-mini-phone {
-  @media (max-width: 460px) { @content; }
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+	only screen and (min-device-pixel-ratio: 2),
+	only screen and (min-resolution: 192dpi),
+	only screen and (min-resolution: 2dppx), (max-width: 460px) {
+    @content;
+  }
 }
+
 @mixin for-phone-only {
-  @media (max-width: 620px) { @content; }
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+	only screen and (min-device-pixel-ratio: 2),
+	only screen and (min-resolution: 192dpi),
+	only screen and (min-resolution: 2dppx), (max-width: 599px) {
+    @content;
+  }
 }
-@mixin for-tablet {
-  @media (max-width: 720px) { @content; }
+
+@mixin for-tablet-portrait-up {
+ @media only screen and (-webkit-min-device-pixel-ratio: 2),
+	only screen and (min-device-pixel-ratio: 2),
+	only screen and (min-resolution: 192dpi),
+	only screen and (min-resolution: 2dppx), (max-width: 899px) {
+    @content;
+  }
 }
+
 @mixin for-tablet-landscape-up {
-  @media (max-width: 900px) { @content; }
+ @media only screen and (-webkit-min-device-pixel-ratio: 2),
+	only screen and (min-device-pixel-ratio: 2),
+	only screen and (min-resolution: 192dpi),
+	only screen and (min-resolution: 2dppx), (max-width: 1199px) {
+    @content;
+  }
 }
+
 @mixin for-desktop-up {
-  @media (max-width: 1200px) { @content; }
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+	only screen and (min-device-pixel-ratio: 2),
+	only screen and (min-resolution: 192dpi),
+	only screen and (min-resolution: 2dppx), (max-width: 1799px) {
+    @content;
+  }
 }
+
+@mixin for-big-desktop-up {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+	only screen and (min-device-pixel-ratio: 2),
+	only screen and (min-resolution: 192dpi),
+	only screen and (min-resolution: 2dppx), (min-width: 1800px) {
+    @content;
+  }
+}
+

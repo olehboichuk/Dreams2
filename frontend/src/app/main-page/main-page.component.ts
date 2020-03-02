@@ -37,6 +37,7 @@ export class MainPageComponent implements OnInit {
 
 
   ngOnInit() {
+    this.registerService.colorHeader(true);
     if (localStorage.getItem("dream_created") == 'false')
       this.router.navigate(['/dream-register']);
     this.loadDreams();
