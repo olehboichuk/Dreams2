@@ -23,6 +23,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SendMailComponent } from './send-mail/send-mail.component';
 import { VerificationComponent } from './verification/verification.component';
 import { TestComponent } from './test/test.component';
+import {SidebarComponent} from "./sidebar/sidebar.component";
+import {SidebarBlueComponent} from "./sidebar-blue/sidebar-blue.component";
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { TestComponent } from './test/test.component';
     ResetPasswordComponent,
     SendMailComponent,
     VerificationComponent,
-    TestComponent
+    TestComponent,
+    SidebarComponent,
+    SidebarBlueComponent
   ],
   imports: [
     ReactiveFormsModule,

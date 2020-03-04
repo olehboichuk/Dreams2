@@ -1,6 +1,6 @@
 $header_font: "Roboto", serif;
 $header_text_color: #74B9FF;
-
+@import "../scss-helpers/mixins";
 .filler {
   flex: 1 1 auto;
 }
@@ -12,7 +12,7 @@ $header_text_color: #74B9FF;
   background-color: #74B9FF;
 }
 
-.bar{
+.bar {
   height: 8vh;
   //transform: translateY(100px);
   transition: all 0.4s 0.4s;
@@ -32,6 +32,7 @@ $header_text_color: #74B9FF;
 
   color: white;
 }
+
 .bar__item {
   outline: none;
   font-family: $header_font;
@@ -44,4 +45,10 @@ $header_text_color: #74B9FF;
   letter-spacing: 0.29em;
 
   color: $header_text_color;
+}
+
+@include for-phone-only {
+  .bar__item,.bar__item__blue,.filler {
+    display: none;
+  }
 }

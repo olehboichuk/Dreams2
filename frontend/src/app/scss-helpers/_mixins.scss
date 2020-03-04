@@ -25,6 +25,7 @@
   }
 }
 
+
 @mixin for-tablet-landscape-up {
  @media only screen and (-webkit-min-device-pixel-ratio: 2),
 	only screen and (min-device-pixel-ratio: 2),
@@ -38,17 +39,9 @@
   @media only screen and (-webkit-min-device-pixel-ratio: 2),
 	only screen and (min-device-pixel-ratio: 2),
 	only screen and (min-resolution: 192dpi),
-	only screen and (min-resolution: 2dppx), (max-width: 1799px) {
+	only screen and (min-resolution: 2dppx), (max-width: 2799px) {
     @content;
   }
 }
 
-@mixin for-big-desktop-up {
-  @media only screen and (-webkit-min-device-pixel-ratio: 2),
-	only screen and (min-device-pixel-ratio: 2),
-	only screen and (min-resolution: 192dpi),
-	only screen and (min-resolution: 2dppx), (min-width: 1800px) {
-    @content;
-  }
-}
 

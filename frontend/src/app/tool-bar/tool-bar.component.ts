@@ -8,7 +8,7 @@ import {ActivatedRoute, ParamMap, Router} from "@angular/router";
   styleUrls: ['./tool-bar.component.scss']
 })
 export class ToolBarComponent implements OnInit {
-  private _authService: MessageService;
+  public _authService: MessageService;
 
 
   constructor(private authService: MessageService, private router: Router) {

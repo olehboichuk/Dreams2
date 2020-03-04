@@ -1,3 +1,19 @@
+<app-sidebar *ngIf="!(index==2)"></app-sidebar>
+<app-sidebar-blue *ngIf="index==2"></app-sidebar-blue>
+<div *ngIf="!(index==2)&&!(index==0)" class="arrows__phone" (click)="toggleText(0, 'show')">
+  <a class="arrow-up">
+    <span class="left-arm"></span>
+    <span class="right-arm"></span>
+    <span class="arrow-slide"></span>
+  </a>
+</div>
+<div *ngIf="(index==2)" class="arrows__phone__blue" (click)="toggleText(0, 'show')">
+  <a class="arrow-up">
+    <span class="left-arm__blue"></span>
+    <span class="right-arm__blue"></span>
+    <span class="arrow-slide__blue"></span>
+  </a>
+</div>
 <main>
   <div (wheel)="Scroll($event)" class="content">
     <section [ngClass]="{'text':true,'show':one}">
@@ -36,17 +52,10 @@
           <button class="btn__go" mat-button routerLink="/register">ПОДІЛИТИСЯ МРІЄЮ</button>
         </div>
         <div class="arrow" (click)="Next()"></div>
-        <div class="arrows" (click)="toggleText(0, 'show')">
-          <a class="arrow-up">
-            <span class="left-arm"></span>
-            <span class="right-arm"></span>
-            <span class="arrow-slide"></span>
-          </a>
-        </div>
-
       </div>
     </section>
     <section [ngClass]="{'text':true,'show':tree}">
+
       <div class="section__intro">
         <p class="white__header">ЯК ЦЕ ПРАЦЮЄ ?</p>
         <div class="content__third">
@@ -77,13 +86,6 @@
           </div>
         </div>
         <div class="arrow__blue" (click)="Next()"></div>
-        <div class="arrows" (click)="toggleText(0, 'show')">
-          <a class="arrow-up">
-            <span class="left-arm__blue"></span>
-            <span class="right-arm__blue"></span>
-            <span class="arrow-slide__blue"></span>
-          </a>
-        </div>
       </div>
     </section>
     <section [ngClass]="{'text':true,'show':four}">
@@ -103,13 +105,6 @@
         </div>
         <div>
           <button class="btn__go" mat-button routerLink="/register">ПОДІЛИТИСЯ МРІЄЮ</button>
-        </div>
-        <div class="arrows__last" (click)="toggleText(0, 'show')">
-          <a class="arrow-up">
-            <span class="left-arm"></span>
-            <span class="right-arm"></span>
-            <span class="arrow-slide"></span>
-          </a>
         </div>
       </div>
     </section>

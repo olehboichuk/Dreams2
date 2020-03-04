@@ -1,0 +1,49 @@
+/*----------------------------------------sidebar----------------------------------------*/
+@import "src/app/scss-helpers/mixins";
+
+$header_font: "Roboto", serif;
+$header_text_color: #74B9FF;
+
+.sidebar {
+  background-color: $header_text_color;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.5s ease;
+  @include for-phone-only {
+    &.active {
+      display: flex;
+    }
+  }
+}
+
+.bar__item {
+  outline: none;
+  font-family: $header_font;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 218.19%;
+  /* or 65px */
+
+  letter-spacing: 0.29em;
+
+  color: $header_text_color;
+}
+
+.bar__item__blue {
+  outline: none;
+  font-family: $header_font;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 218.19%;
+  /* or 65px */
+
+  letter-spacing: 0.29em;
+
+  color: white;
+}
